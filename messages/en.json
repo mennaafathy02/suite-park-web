@@ -1,0 +1,12 @@
+{
+  "index": {
+    "home": "Home",
+    "aboutus": "About us",
+    "rooms": "Rooms",
+    "contactus": "Contact us",
+    "whyus": "Why choose Suite Parl"
+  },
+  "global": {
+    "search_here": "Search here"
+  }
+}
