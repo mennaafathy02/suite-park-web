@@ -195,7 +195,7 @@ function CarouselPrevious({
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeftCircle className="text-primary" />
+      <ArrowRightCircle className="text-primary" />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -225,7 +225,7 @@ function CarouselNext({
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRightCircle className="text-primary" />
+      <ArrowLeftCircle className="text-primary" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

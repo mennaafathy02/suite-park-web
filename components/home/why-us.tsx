@@ -8,7 +8,7 @@ export default function WhyUs() {
     {
       icon: <Ticket className="size-8 text-primary" />,
       title: "Ultimate flexibility",
-      desc: "You&lsquo;re in control, with free cancellation and payment options to satisfy any plan or budget.",
+      desc: "You're in control, with free cancellation and payment options to satisfy any plan or budget.",
     },
     {
       icon: <BookOpen className="size-8 text-primary" />,
@@ -28,11 +28,11 @@ export default function WhyUs() {
   ];
 
   return (
-    <div className="md:px-8 px-6 py-10 space-y-4">
-      <h2 className="md:text-4xl text-2xl font-extrabold">
+    <section className="container md:py-10 py-6 space-y-4">
+      <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
         {t("index.whyus")}
       </h2>
-      <div className="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {items.map((el, index) => (
           <div key={index} className="p-4 space-y-4">
             {el.icon}
@@ -41,6 +41,6 @@ export default function WhyUs() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

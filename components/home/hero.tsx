@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <div className="flex justify-center items-center md:px-8 px-6 pb-10">
+    <section className="flex justify-center items-center container md:pb-10 pb-6">
       <Carousel className="w-full">
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
@@ -32,6 +32,6 @@ export default function Hero() {
         <CarouselPrevious className="end-0 translate-x-1/2" />
         <CarouselNext className="start-0 -translate-x-1/2" />
       </Carousel>
-    </div>
+    </section>
   );
 }

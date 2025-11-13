@@ -4,9 +4,16 @@
     "aboutus": "About us",
     "rooms": "Rooms",
     "contactus": "Contact us",
-    "whyus": "Why choose Suite Parl"
+    "whyus": "Why choose Suite Parl",
+    "find_room": "Find a room with us.",
+    "we_make": "We Make",
+    "we_make_2": "Your Stay Easy at Suite Park",
+    "we_make_desc": "Enjoy a unique experience at Suite Park Hotel, where comfort meets elegance. Our hotel offers the perfect blend of relaxation and luxury—making every stay unforgettable.",
+    "popular_title": "Popular Things to Do Near Suite Park",
+    "top_rooms_title": "Top Rooms at Suite Park"
   },
   "global": {
-    "search_here": "Search here"
+    "search_here": "Search here",
+    "see_all": "See all"
   }
 }

@@ -1,6 +1,39 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@layer components {
+  .container {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+
+    @media (min-width: 640px) {
+      max-width: 640px;
+    }
+
+    @media (min-width: 768px) {
+      max-width: 768px;
+    }
+
+    @media (min-width: 1024px) {
+      max-width: 1024px;
+      padding-inline: 2rem;
+
+    }
+
+    @media (min-width: 1280px) {
+      max-width: 1280px;
+      padding-inline: 3rem;
+
+    }
+
+    @media (min-width: 1536px) {
+      max-width: 1536px;
+      padding-inline: 4rem;
+
+    }
+  }
+}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

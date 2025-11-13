@@ -9,17 +9,17 @@ import Image from "next/image";
 
 export default function RoomCard() {
   return (
-    <div className="p-4 rounded-md space-y-4 border">
+    <div className="md:p-4 p-2 rounded-md space-y-4 border">
       <div className="relative">
         <Image
           src={"/imgs/room.jpg"}
           alt=""
           width={1000}
           height={1000}
-          className="rounded-md"
+          className="rounded-md max-h-44 object-cover"
         />
         <div className="p-1 bg-white border rounded-full absolute top-2 start-2">
-          <Heart />
+          <Heart className="md:size-6 size-4"/>
         </div>
       </div>
       <div className="space-y-2">
@@ -28,7 +28,7 @@ export default function RoomCard() {
           <span>Jeddah, Saudi Arabia</span>
         </div>
         <div className="text-primary">Suite · Apt 5 · Level 2</div>
-        <div className="text-stone-400 flex gap-4 justify-between items-center">
+        <div className="text-stone-400 flex flex-wrap gap-4 justify-between items-center">
           <div className="flex items-center gap-2">
             <BedDouble className="size-5" />
             <span>5 bedrooms</span>
@@ -39,7 +39,7 @@ export default function RoomCard() {
           </div>
         </div>
         <hr className="my-4" />
-        <div className="text-primary flex items-center justify-between">
+        <div className="text-primary flex flex-wrap gap-4 items-center justify-between">
           <div className="flex items-center gap-2">
             <CalendarDaysIcon />
             <span>4 days</span>

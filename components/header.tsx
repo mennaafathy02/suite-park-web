@@ -3,6 +3,7 @@ import {
   Instagram,
   Linkedin,
   Mail,
+  Menu,
   Phone,
   Search,
   Twitter,
@@ -12,81 +13,104 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Link } from "@/navigation";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function Header() {
   const t = useTranslations();
   return (
     <div className="">
-      <div className="bg-primary-foreground text-xs py-3 md:px-8 px-6 flex items-center justify-between gap-4">
-        <div className="flex gap-8">
-          <div className="flex gap-2 items-center">
-            <Phone className="text-primary size-4" />
-            <span>(93) 123 456 6789</span>
+      <div className="bg-primary-foreground">
+        <div className="text-xs py-3 container flex items-center justify-between gap-4">
+          <div className="flex gap-8">
+            <div className="flex gap-2 items-center">
+              <Phone className="text-primary size-4" />
+              <span className="hidden sm:block">(93) 123 456 6789</span>
+            </div>
+            <div className="flex gap-2 items-center">
+              <Mail className="text-primary size-4" />
+              <span className="hidden sm:block">yourinfo@yourmail.com </span>
+            </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <Mail className="text-primary size-4" />
-            <span>yourinfo@yourmail.com </span>
-          </div>
+          <ul className="flex md:gap-8 gap-2 items-center">
+            <li>
+              <Link href={"https://facebook.com"}>
+                <Facebook className="fill-primary text-primary md:size-5 size-3" />
+              </Link>
+            </li>
+            <li>
+              <Link href={"https://facebook.com"}>
+                <Instagram className="text-primary md:size-5 size-3" />
+              </Link>
+            </li>
+            <li>
+              <Link href={"https://facebook.com"}>
+                <Twitter className="fill-primary text-primary md:size-5 size-3" />
+              </Link>
+            </li>
+            <li>
+              <Link href={"https://facebook.com"}>
+                <Linkedin className="fill-primary text-primary md:size-5 size-3" />
+              </Link>
+            </li>
+            <li>
+              <Link href={"https://facebook.com"}>
+                <Youtube className="text-primary md:size-5 size-3" />
+              </Link>
+            </li>
+          </ul>
         </div>
-        <ul className="flex gap-8 items-center">
-          <li>
-            <Link href={"https://facebook.com"}>
-              <Facebook className="fill-primary text-primary size-5" />
-            </Link>
-          </li>
-          <li>
-            <Link href={"https://facebook.com"}>
-              <Instagram className="text-primary size-5" />
-            </Link>
-          </li>
-          <li>
-            <Link href={"https://facebook.com"}>
-              <Twitter className="fill-primary text-primary size-5" />
-            </Link>
-          </li>
-          <li>
-            <Link href={"https://facebook.com"}>
-              <Linkedin className="fill-primary text-primary size-5" />
-            </Link>
-          </li>
-          <li>
-            <Link href={"https://facebook.com"}>
-              <Youtube className="text-primary size-5" />
-            </Link>
-          </li>
-        </ul>
       </div>
-      <div className="flex justify-between items-center gap-4 py-3 md:px-8 px-6">
+      <div className="flex justify-between items-center gap-4 py-3 container">
         <Image
           src="/imgs/logo.svg"
           alt=""
           width={200}
           height={200}
-          className="h-8"
+          className="md:w-40 w-20"
         />
-        <div>
-          <ul className="flex items-center gap-4">
-            <li>
-              <Link href={"/"}>{t("index.home")}</Link>
-            </li>
-            <li>
-              <Link href={"/about-us"}>{t("index.aboutus")}</Link>
-            </li>
-            <li>
-              <Link href={"/rooms"}>{t("index.rooms")}</Link>
-            </li>
-            <li>
-              <Link href={"/contact-us"}>{t("index.contactus")}</Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="md:flex hidden items-center gap-4">
+          <li>
+            <Link href={"/"}>{t("index.home")}</Link>
+          </li>
+          <li>
+            <Link href={"/about-us"}>{t("index.aboutus")}</Link>
+          </li>
+          <li>
+            <Link href={"/rooms"}>{t("index.rooms")}</Link>
+          </li>
+          <li>
+            <Link href={"/contact-us"}>{t("index.contactus")}</Link>
+          </li>
+        </ul>
+
         <div className="relative">
           <Search className="absolute start-2 size-4 top-[50%] -translate-y-[50%]" />
           <Input
-            className="rounded-full ps-8 bg-muted"
+            className="rounded-full h-auto py-2 ps-8 bg-muted md:max-w-none max-w-40 md:text-sm text-xs"
             placeholder={t("global.search_here")}
           />
         </div>
+        <Sheet>
+          <SheetTrigger className="md:hidden">
+            <Menu className="size-5" />
+          </SheetTrigger>
+          <SheetContent className="p-6">
+            <ul className="flex flex-col gap-4">
+              <li>
+                <Link href={"/"}>{t("index.home")}</Link>
+              </li>
+              <li>
+                <Link href={"/about-us"}>{t("index.aboutus")}</Link>
+              </li>
+              <li>
+                <Link href={"/rooms"}>{t("index.rooms")}</Link>
+              </li>
+              <li>
+                <Link href={"/contact-us"}>{t("index.contactus")}</Link>
+              </li>
+            </ul>
+          </SheetContent>
+        </Sheet>
       </div>
     </div>
   );
