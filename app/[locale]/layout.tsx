@@ -68,11 +68,11 @@ export default async function RootLayout({
         /> */}
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
-          {children}
+          <div className="flex-1">{children}</div>
           <Footer />
         </NextIntlClientProvider>
       </body>

@@ -58,7 +58,6 @@ const SuiteParkIntro = () => {
   const t = useTranslations();
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-6">
-     
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left Column: Content */}
         <div className="flex flex-col justify-center">

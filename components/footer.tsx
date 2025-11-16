@@ -36,7 +36,7 @@ const footerLinks = [
 export default function Footer() {
   return (
     <footer className="w-full md:py-10 py-8 bg-[#1C262F] text-white">
-      <div className="container">
+      <div className="container mx-auto">
         {/*
           MAIN GRID STRUCTURE
           Default (mobile): 1 column

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="flex justify-center items-center container md:pb-10 pb-6">
+    <section className="flex justify-center items-center container mx-auto md:pb-10 pb-6">
       <Carousel className="w-full">
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (

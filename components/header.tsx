@@ -20,7 +20,7 @@ export default function Header() {
   return (
     <div className="">
       <div className="bg-primary-foreground">
-        <div className="text-xs py-3 container flex items-center justify-between gap-4">
+        <div className="text-xs py-3 container mx-auto flex items-center justify-between gap-4">
           <div className="flex gap-8">
             <div className="flex gap-2 items-center">
               <Phone className="text-primary size-4" />
@@ -60,7 +60,7 @@ export default function Header() {
           </ul>
         </div>
       </div>
-      <div className="flex justify-between items-center gap-4 py-3 container">
+      <div className="flex justify-between items-center gap-4 py-3 container mx-auto">
         <Image
           src="/imgs/logo.svg"
           alt=""

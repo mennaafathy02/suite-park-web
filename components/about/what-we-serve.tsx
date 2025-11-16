@@ -1,8 +1,7 @@
-import { BookOpen, Gem, Medal, Ticket } from "lucide-react";
 import { useTranslations } from "next-intl";
-// import Image from "next/image";
+import { BookOpen, Gem, Medal, Ticket } from "lucide-react";
 
-export default function WhyUs() {
+export default function WhatWeServe() {
   const t = useTranslations();
   const items = [
     {
@@ -26,12 +25,14 @@ export default function WhyUs() {
       desc: "New price? New plan? No problem. We're here to help, 24/7.",
     },
   ];
-
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-4">
-      <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
-        {t("index.whyus")}
-      </h2>
+      <div className="space-y-2">
+        <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
+          {t("index.What we serve")}
+        </h2>
+        <p className="text-lg">We offer our best services</p>
+      </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {items.map((el, index) => (
           <div key={index} className="p-4 space-y-4">

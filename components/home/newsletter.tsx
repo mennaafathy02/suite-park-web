@@ -23,7 +23,7 @@ const NewsletterFooter = () => {
   // Custom colors matching your theme
 
   return (
-    <section className="container md:py-10 py-8">
+    <section className="container mx-auto md:py-10 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         {/* --- Left Column: About/Info --- */}
         <div className="flex flex-col gap-4">

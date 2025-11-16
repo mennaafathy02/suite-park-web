@@ -91,7 +91,7 @@ const InteractiveCustomerReviews = () => {
   const LIGHT_GREEN_TEXT = "#387040";
 
   return (
-    <section className="relative md:py-10 py-8 container bg-white overflow-hidden space-y-6">
+    <section className="relative md:py-10 py-8 container mx-auto bg-white overflow-hidden space-y-6">
       <div className="text-center">
         {/* Main Title */}
         <h2

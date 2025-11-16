@@ -97,7 +97,7 @@ const DestinationCard = ({
 const TopRooms = () => {
   const t = useTranslations();
   return (
-    <section className="md:py-10 py-6 container space-y-6">
+    <section className="md:py-10 py-6 container mx-auto space-y-6">
       <div className="flex flex-wrap justify-between items-center ">
         <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
           {t("index.top_rooms_title")}

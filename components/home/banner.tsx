@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Banner = () => {
   return (
-    <div className="md:py-10 py-8 container">
-      {/* Main Banner Container: Uses a custom linear gradient to match the image. 
+    <div className="md:py-10 py-8 container mx-auto">
+      {/* Main Banner container mx-auto: Uses a custom linear gradient to match the image. 
         It's set to be flex for easy alignment. 
       */}
       <div
