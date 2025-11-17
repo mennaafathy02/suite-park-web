@@ -11,7 +11,7 @@ export default function AboutHero() {
             happy anytime, anywhere
           </p>
         </div>
-        <div className="container mx-auto rounded-lg overflow-hidden absolute top-0 start-0 h-full w-full">
+        <div className="rounded-lg overflow-hidden absolute top-0 start-[50%] -translate-x-[50%] h-full w-[calc(100%-1rem)] lg:w-[calc(100%-2rem)] xl:w-[calc(100%-3rem)] 2xl:w-[calc(100%-4rem)] mx-auto">
           <Image
             src={"/imgs/bg-hero.jpg"}
             alt=""

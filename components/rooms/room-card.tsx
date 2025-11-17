@@ -2,12 +2,16 @@ import Image from "next/image";
 import { CardProps } from "./types";
 import { Heart } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
   return (
-    <article className="flex gap-4 p-4 bg-white border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+    <Link
+      href={"/rooms/room-1"}
+      className="flex gap-4 p-4 bg-white border rounded-md shadow-sm hover:shadow-md transition-shadow"
+    >
       {/* image */}
-      <div className="w-40 shrink-0 rounded-lg overflow-hidden relative">
+      <div className="w-40 shrink-0 rounded-md overflow-hidden relative">
         <Image
           width={1000}
           height={1000}
@@ -19,7 +23,7 @@ export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
         {place.badges.map((b) => (
           <span
             key={b}
-            className="text-xs absolute z-10 start-0 top-0 bg-emerald-100 text-emerald-800 px-2 py-1 rounded-md"
+            className="text-xs absolute z-10 start-0 top-0 bg-primary text-white px-2 py-1 rounded-ss-md rounded-ee-md"
           >
             {b}
           </span>
@@ -58,12 +62,9 @@ export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
 
         {/* tags */}
         <div className="mt-3 flex flex-wrap gap-2 my-2">
-          {place.tags.map((t) => (
-            <span
-              key={t}
-              className="text-xs px-2 py-1 rounded-full text-gray-600"
-            >
-              {t}
+          {place.tags.map((t, index) => (
+            <span key={t} className="text-xs py-1 rounded-full text-gray-600">
+              {t} {index + 1 != place.tags.length ? "|" : ""}
             </span>
           ))}
         </div>
@@ -79,6 +80,6 @@ export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
           </div>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
