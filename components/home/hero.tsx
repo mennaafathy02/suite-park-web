@@ -6,12 +6,16 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Link } from "@/navigation";
+import { useLocale } from "next-intl";
 import Image from "next/image";
 
 export default function Hero() {
+  const locale = useLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
     <section className="flex justify-center items-center container mx-auto md:pb-10 pb-6">
-      <Carousel className="w-full">
+      <Carousel dir={dir} className="w-full">
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index}>

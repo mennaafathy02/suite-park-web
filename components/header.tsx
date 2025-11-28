@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Facebook,
   Instagram,
@@ -14,9 +16,21 @@ import Image from "next/image";
 import { Input } from "./ui/input";
 import { Link } from "@/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useRouter } from "@/i18n/routing";
+import { FormEvent, useState } from "react";
 
 export default function Header() {
   const t = useTranslations();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <div className="">
       <div className="bg-primary-foreground">
@@ -61,13 +75,15 @@ export default function Header() {
         </div>
       </div>
       <div className="flex justify-between items-center gap-4 py-3 container mx-auto">
-        <Image
-          src="/imgs/logo.svg"
-          alt=""
-          width={200}
-          height={200}
-          className="md:w-40 w-20"
-        />
+        <Link href={"/"}>
+          <Image
+            src="/imgs/logo.svg"
+            alt=""
+            width={200}
+            height={200}
+            className="md:w-40 w-20"
+          />
+        </Link>
         <ul className="md:flex hidden items-center gap-4">
           <li>
             <Link href={"/"}>{t("index.home")}</Link>
@@ -83,13 +99,16 @@ export default function Header() {
           </li>
         </ul>
 
-        <div className="relative">
-          <Search className="absolute start-2 size-4 top-[50%] -translate-y-[50%]" />
+        <form onSubmit={handleSearch} className="relative">
+          <Search className="absolute start-2 size-4 top-[50%] -translate-y-[50%] pointer-events-none z-10" />
           <Input
+            type="search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="rounded-full h-auto py-2 ps-8 bg-muted md:max-w-none max-w-40 md:text-sm text-xs"
             placeholder={t("global.search_here")}
           />
-        </div>
+        </form>
         <Sheet>
           <SheetTrigger className="md:hidden">
             <Menu className="size-5" />

@@ -1,17 +1,18 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function AboutHero() {
+  const t = useTranslations();
   return (
     <>
       <section className="flex relative justify-center items-center container mx-auto md:pb-10 pb-6 min-h-96 overflow-hidden">
         <div className=" relative z-20 text-white max-w-2xl space-y-4 text-center">
-          <h1 className="md:text-4xl text-xl font-bold">About us</h1>
-          <p className="text-xl">
-            From local escapes to far-flung adventures, find what makes you
-            happy anytime, anywhere
-          </p>
+          <h1 className="md:text-4xl text-xl font-bold">
+            {t("index.aboutus")}
+          </h1>
+          <p className="text-xl">{t("index.aboutus_desc")}</p>
         </div>
-        <div className="rounded-lg overflow-hidden absolute top-0 start-[50%] -translate-x-[50%] h-full w-[calc(100%-1rem)] lg:w-[calc(100%-2rem)] xl:w-[calc(100%-3rem)] 2xl:w-[calc(100%-4rem)] mx-auto">
+        <div className="rounded-lg overflow-hidden absolute top-0 ltr:end-1/2 rtl:start-1/2  translate-x-[50%] h-full w-[calc(100%-1rem)] lg:w-[calc(100%-2rem)] xl:w-[calc(100%-3rem)] 2xl:w-[calc(100%-4rem)] mx-auto">
           <Image
             src={"/imgs/bg-hero.jpg"}
             alt=""

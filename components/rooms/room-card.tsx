@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { CardProps } from "./types";
-import { Heart } from "lucide-react";
-import { Button } from "../ui/button";
+// import { Heart } from "lucide-react";
+// import { Button } from "../ui/button";
 import Link from "next/link";
 
-export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
+export default function RoomCard({ place, 
+  // onToggleFav, isFav
+ }
+  :
+   CardProps) {
   return (
     <Link
       href={"/rooms/room-1"}
@@ -29,7 +33,7 @@ export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
           </span>
         ))}
 
-        <Button
+        {/* <Button
           onClick={() => onToggleFav(place.id)}
           aria-pressed={isFav}
           className="bg-transparent hover:bg-transparent rounded-md p-0  absolute z-10 end-0 top-0"
@@ -40,7 +44,7 @@ export default function RoomCard({ place, onToggleFav, isFav }: CardProps) {
               isFav ? "fill-primary text-white" : "text-white"
             }`}
           />
-        </Button>
+        </Button> */}
       </div>
 
       {/* content */}

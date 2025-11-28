@@ -29,9 +29,9 @@ export default function WhatWeServe() {
     <section className="container mx-auto md:py-10 py-6 space-y-4">
       <div className="space-y-2">
         <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
-          {t("index.What we serve")}
+          {t("index.what_we_serve")}
         </h2>
-        <p className="text-lg">We offer our best services</p>
+        <p className="text-lg">{t("index.what_we_serve_desc")}</p>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {items.map((el, index) => (

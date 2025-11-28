@@ -2,14 +2,18 @@ import {
   BedDouble,
   CalendarDaysIcon,
   Globe,
-  Heart,
+  // Heart,
   Maximize2,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function RoomCard() {
   return (
-    <div className="md:p-4 p-2 rounded-md space-y-4 border">
+    <Link
+      href={"/rooms/room-1"}
+      className="md:p-4 p-2 rounded-md space-y-4 border"
+    >
       <div className="relative">
         <Image
           src={"/imgs/room.jpg"}
@@ -18,9 +22,9 @@ export default function RoomCard() {
           height={1000}
           className="rounded-md max-h-44 object-cover"
         />
-        <div className="p-1 bg-white border rounded-full absolute top-2 start-2">
-          <Heart className="md:size-6 size-4"/>
-        </div>
+        {/* <div className="p-1 bg-white border rounded-full absolute top-2 start-2">
+          <Heart className="md:size-6 size-4" />
+        </div> */}
       </div>
       <div className="space-y-2">
         <div className="text-stone-400 flex gap-2 items-center">
@@ -47,6 +51,6 @@ export default function RoomCard() {
           <div>From $189.36</div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

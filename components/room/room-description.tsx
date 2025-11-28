@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Utensils,
@@ -15,22 +17,42 @@ import {
   Baby,
   Moon,
   PawPrint,
+  Wifi,
+  Tv,
+  AirVent,
+  Coffee,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 const amenities = [
-  { icon: Utensils, label: "Restaurant" },
-  { icon: Waves, label: "Pool" },
-  { icon: Dumbbell, label: "Gym" },
-  { icon: ShowerHead, label: "Spa" },
-  { icon: Cigarette, label: "Smoking Allowed" },
+  { icon: Utensils, label: "restaurant", key: "restaurant" },
+  { icon: Waves, label: "pool", key: "pool" },
+  { icon: Dumbbell, label: "gym", key: "gym" },
+  { icon: ShowerHead, label: "spa", key: "spa" },
+  { icon: Cigarette, label: "smoking_allowed", key: "smoking_allowed" },
+  { icon: Wifi, label: "wifi", key: "wifi" },
+  { icon: Tv, label: "tv", key: "tv" },
+  { icon: AirVent, label: "air_conditioning", key: "air_conditioning" },
+  { icon: Coffee, label: "coffee_maker", key: "coffee_maker" },
+  { icon: Hotel, label: "room_service", key: "room_service" },
 ];
 
-const AmenityItem = ({ Icon, label }: { Icon: LucideIcon; label: string }) => (
-  <div className="flex items-center space-x-2 text-gray-700">
-    <Icon className="w-5 h-5 text-gray-500" />
-    <span className="text-base">{label}</span>
-  </div>
-);
+const AmenityItem = ({ Icon, label }: { Icon: LucideIcon; label: string }) => {
+  return (
+    <div className="flex items-center space-x-2 text-gray-700">
+      <Icon className="w-5 h-5 text-gray-500" />
+      <span className="text-base">{label}</span>
+    </div>
+  );
+};
 const PolicyRow = ({
   icon: Icon,
   title,
@@ -54,6 +76,10 @@ const PolicyRow = ({
   </div>
 );
 export default function RoomDescription() {
+  const t = useTranslations();
+  const [descriptionOpen, setDescriptionOpen] = useState(false);
+  const [amenitiesOpen, setAmenitiesOpen] = useState(false);
+
   // Booking widget data
   const checkInDate = "08/14/2025";
   const checkOutDate = "08/19/2025";
@@ -61,46 +87,43 @@ export default function RoomDescription() {
   const policiesData = [
     {
       icon: CalendarCheck,
-      title: "Check-in",
-      details:
-        "From 15:00 to 18:00\nYou'll need to let the property know in advance what time you'll arrive.",
+      title: t("room.policies_list.check_in_title"),
+      details: t("room.policies_list.check_in_details"),
     },
     {
       icon: CalendarX,
-      title: "Check-out",
-      details: "From 8:00 to 11:00",
+      title: t("room.policies_list.check_out_title"),
+      details: t("room.policies_list.check_out_details"),
     },
     {
       icon: FileText,
-      title: "Cancellation/prepayment",
-      details:
-        "Cancellation and prepayment policies vary according to accommodation type. Please check what condition may apply to each option when making your selection.",
+      title: t("room.policies_list.cancellation_title"),
+      details: t("room.policies_list.cancellation_details"),
     },
     {
       icon: Users,
-      title: "Children and beds",
-      details:
-        "Child policies: children of any age are welcome. To see correct prices and occupancy information, please add the number of children in your group and their ages to your search. Cot and extra bed policies: Cots and extra beds are not available at this property.",
+      title: t("room.policies_list.children_beds_title"),
+      details: t("room.policies_list.children_beds_details"),
     },
     {
       icon: Baby,
-      title: "No age restriction",
-      details: "Guests of all ages are welcome.",
+      title: t("room.policies_list.age_restriction_title"),
+      details: t("room.policies_list.age_restriction_details"),
     },
     {
       icon: Moon,
-      title: "Quiet hours",
-      details: "Guests must be quiet between 22:00 and 10:00.",
+      title: t("room.policies_list.quiet_hours_title"),
+      details: t("room.policies_list.quiet_hours_details"),
     },
     {
       icon: Cigarette,
-      title: "Smoking",
-      details: "Smoking not allowed.",
+      title: t("room.policies_list.smoking_title"),
+      details: t("room.policies_list.smoking_details"),
     },
     {
       icon: PawPrint,
-      title: "Pets",
-      details: "Pets are not allowed.",
+      title: t("room.policies_list.pets_title"),
+      details: t("room.policies_list.pets_details"),
     },
   ];
   return (
@@ -109,46 +132,97 @@ export default function RoomDescription() {
         <div className="lg:col-span-3">
           {/* DESCRIPTION SECTION */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-3">Description</h2>
+            <h2 className="text-2xl font-bold mb-3">
+              {t("room.description")}
+            </h2>
             <p className="text-gray-700 mb-4">
               <span className="font-semibold text-gray-800">
-                Hotel size 200 rooms, Arranged over 6 floors
+                {t("room.hotel_size")}
               </span>
               <br />
               <span className="font-semibold text-gray-800">
-                Barcelona elegance with 6-star service:
+                {t("room.elegance_title")}
               </span>
               <br />
-              Simply elegant in all respects, this beautiful Parisian property
-              offers a wonderful location that enhances your stay. Enjoy
-              spacious rooms with great amenities and 6-star service from a
-              superb team dedicated to making you feel like a VIP...
+              {t("room.description_short")}
             </p>
-            {/* Custom Button styled for 'Show More' */}
-            <Button
-              variant="outline"
-              className="text-primary border-primary hover:bg-green-50"
-            >
-              Show More
-            </Button>
+            {/* Show More Dialog */}
+            <Dialog open={descriptionOpen} onOpenChange={setDescriptionOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="text-primary border-primary hover:bg-green-50"
+                >
+                  {t("room.show_more")}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl">
+                    {t("room.full_description")}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 text-gray-700">
+                  <p>
+                    <span className="font-semibold text-gray-800">
+                      {t("room.hotel_size")}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-800">
+                      {t("room.elegance_title")}
+                    </span>
+                    <br />
+                    {t("room.description_full")}
+                  </p>
+                  <p>{t("room.description_extra")}</p>
+                </div>
+              </DialogContent>
+            </Dialog>
           </section>
 
           {/* AMENITIES SECTION */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">Amenities</h2>
+            <h2 className="text-2xl font-bold mb-4">
+              {t("room.amenities")}
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-4">
-              {amenities.map((item, index) => (
-                <AmenityItem key={index} Icon={item.icon} label={item.label} />
+              {amenities.slice(0, 5).map((item, index) => (
+                <AmenityItem
+                  key={index}
+                  Icon={item.icon}
+                  label={t(`room.amenities_list.${item.key}`)}
+                />
               ))}
             </div>
 
-            {/* 'Show All Amenities' Button */}
-            <Button
-              variant="outline"
-              className="mt-6 text-primary border-primary hover:bg-green-50"
-            >
-              Show All 10 Amenities
-            </Button>
+            {/* Show All Amenities Dialog */}
+            <Dialog open={amenitiesOpen} onOpenChange={setAmenitiesOpen}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="mt-6 text-primary border-primary hover:bg-green-50"
+                >
+                  {t("room.show_all_amenities", { count: amenities.length })}
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl">
+                    {t("room.all_amenities")}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-2 gap-4 py-4">
+                  {amenities.map((item, index) => (
+                    <AmenityItem
+                      key={index}
+                      Icon={item.icon}
+                      label={t(`room.amenities_list.${item.key}`)}
+                    />
+                  ))}
+                </div>
+              </DialogContent>
+            </Dialog>
           </section>
         </div>
 
@@ -158,7 +232,7 @@ export default function RoomDescription() {
               <div className="flex-1 p-3 border rounded-lg">
                 <div className="flex items-center text-sm font-medium text-gray-500 mb-1">
                   <Calendar className="w-4 h-4 mr-1" />
-                  Check-in
+                  {t("room.check_in")}
                 </div>
                 <p className="font-bold text-gray-900">{checkInDate}</p>
               </div>
@@ -166,7 +240,7 @@ export default function RoomDescription() {
               <div className="flex-1 p-3 border rounded-lg">
                 <div className="flex items-center text-sm font-medium text-gray-500 mb-1">
                   <Calendar className="w-4 h-4 mr-1" />
-                  Check-out
+                  {t("room.check_out")}
                 </div>
                 <p className="font-bold text-gray-900">{checkOutDate}</p>
               </div>
@@ -175,22 +249,20 @@ export default function RoomDescription() {
             <div className="p-3 border rounded-lg mb-6">
               <div className="flex items-center text-sm font-medium text-gray-500 mb-1">
                 <Hotel className="w-4 h-4 mr-1" />
-                Rooms and Guests
+                {t("room.rooms_guests")}
               </div>
               <p className="font-bold text-gray-900">{roomsGuests}</p>
             </div>
 
             <Button className="w-full text-white font-semibold py-2">
-              Show Rooms
+              {t("room.show_rooms")}
             </Button>
           </div>
         </div>
       </div>
       <div className="">
-        <h2 className="text-2xl font-bold mb-1">Policies</h2>
-        <p className="text-sm mb-6">
-          Lazur Hotel Apartments takes special requests - add in the next step!
-        </p>
+        <h2 className="text-2xl font-bold mb-1">{t("room.policies")}</h2>
+        <p className="text-sm mb-6">{t("room.policies_subtitle")}</p>
 
         <div className="p-4 border rounded-xl shadow-sm bg-white">
           {policiesData.map((policy, index) => (

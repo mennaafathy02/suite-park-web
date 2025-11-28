@@ -14,6 +14,6 @@ export type SortType = "recommended" | "price-asc" | "price-desc" | "rating";
 
 export interface CardProps {
   place: Place;
-  onToggleFav: (id: number) => void;
-  isFav: boolean;
+  onToggleFav?: (id: number) => void;
+  isFav?: boolean;
 }

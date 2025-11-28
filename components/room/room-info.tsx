@@ -1,22 +1,50 @@
+"use client";
+
 import { Heart, Images, Share2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 
 export default function RoomInfo() {
+  const t = useTranslations();
+  const [galleryOpen, setGalleryOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const hotelName = "Hotel Arts Barcelona";
   const hotelLocation = "Barcelona, Spain";
   const rating = 5; // number of stars
 
   // Placeholder images (replace with your actual image paths/URLs)
-  const images = {
-    main: "/imgs/room.jpg",
-    img2: "/imgs/room.jpg",
-    img3: "/imgs/room.jpg",
-    img4: "/imgs/room.jpg",
-    img5: "/imgs/room.jpg",
+  const images = [
+    { src: "/imgs/room.jpg", alt: "Hotel main room view" },
+    { src: "/imgs/room-1.jpg", alt: "Hotel lounge area" },
+    { src: "/imgs/room-2.jpg", alt: "Hotel bedroom" },
+    { src: "/imgs/room-3.jpg", alt: "Hotel kitchenette" },
+    { src: "/imgs/room-4.jpg", alt: "Another hotel room view" },
+    { src: "/imgs/room-5.jpg", alt: "Hotel bathroom" },
+    { src: "/imgs/room-6.jpg", alt: "Hotel balcony view" },
+    { src: "/imgs/room-7.jpg", alt: "Hotel amenities" },
+  ];
+
+  const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index);
+    setGalleryOpen(true);
   };
+  const locale = useLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-4">
@@ -66,65 +94,95 @@ export default function RoomInfo() {
       </div> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="relative overflow-hidden rounded-lg shadow-md">
+        <div
+          className="relative overflow-hidden rounded-lg shadow-md cursor-pointer hover:opacity-90 transition-opacity"
+          onClick={() => handleImageClick(0)}
+        >
           <Image
-            src={images.main}
-            alt="Hotel main room view"
-            width={800} // Set appropriate dimensions
+            src={images[0].src}
+            alt={images[0].alt}
+            width={800}
             height={600}
             className="w-full h-full object-cover"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3">
-            <Image
-              src={images.img2} // Replace with actual image source
-              alt="Hotel lounge area"
-              width={400}
-              height={300}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3">
-            <Image
-              src={images.img4}
-              alt="Hotel kitchenette"
-              width={400}
-              height={300}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3">
-            <Image
-              src={images.img4} // Replace with actual image source
-              alt="Hotel kitchenette"
-              width={400}
-              height={300}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3">
-            <Image
-              src={images.img5}
-              alt="Another hotel room view"
-              width={400}
-              height={300}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/10 bg-opacity-40 flex items-center justify-center">
-              <span className="text-white text-lg font-bold flex items-center">
-                <span className="me-1">
-                  <Images />
-                </span>{" "}
-                10+
-              </span>
+          {images.slice(1, 5).map((image, index) => (
+            <div
+              key={index}
+              className="relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3 cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => handleImageClick(index + 1)}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={400}
+                height={300}
+                className="w-full h-full object-cover"
+              />
+              {index === 3 && (
+                <div
+                  className="absolute inset-0 bg-black/10 bg-opacity-40 flex items-center justify-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleImageClick(0);
+                  }}
+                >
+                  <span className="text-white text-lg font-bold flex items-center">
+                    <span className="me-1">
+                      <Images />
+                    </span>
+                    {images.length}+
+                  </span>
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </div>
       </div>
+
+      {/* Image Gallery Dialog with Carousel */}
+      <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
+        <DialogContent dir={dir} className="max-w-5xl max-h-[90vh] p-0">
+          <DialogHeader className="p-8 pb-0">
+            <DialogTitle className="rtl:text-start">
+              {t("room.image_gallery")}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="p-6 pt-4">
+            <Carousel
+              opts={{
+                startIndex: currentImageIndex,
+                loop: true,
+              }}
+              className="w-full"
+              dir={dir}
+            >
+              <CarouselContent>
+                {images.map((image, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={1200}
+                        height={800}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <p className="text-center text-sm text-gray-500 mt-2">
+                      {index + 1} / {images.length}
+                    </p>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="ltr:end-4 rtl:start-4 rtl:rotate-180" />
+              <CarouselNext className="ltr:start-4 rtl:end-4 rtl:rotate-180" />
+            </Carousel>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
