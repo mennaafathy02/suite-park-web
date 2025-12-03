@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   Facebook,
@@ -10,6 +12,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { motion } from "motion/react";
 
 // // Data for social links (using simple SVG icons or linking to an icon library)
 // const socialLinks = [
@@ -27,28 +30,65 @@ const NewsletterFooter = () => {
     <section className="container mx-auto md:py-10 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         {/* --- Left Column: About/Info --- */}
-        <div className="flex flex-col gap-4">
+        <motion.div
+          className="flex flex-col gap-4"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           {/* Logo/Brand */}
-          <Image
-            src={"/imgs/logo.svg"}
-            alt=""
-            width={1000}
-            height={1000}
-            className="md:w-40 w-24"
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 200 }}
+            viewport={{ once: true }}
+          >
+            <Image
+              src={"/imgs/logo.svg"}
+              alt=""
+              width={1000}
+              height={1000}
+              className="md:w-40 w-24"
+            />
+          </motion.div>
 
           {/* Description Text */}
-          <p className="text-gray-600 mb-8 max-w-lg leading-relaxed">
+          <motion.p
+            className="text-gray-600 mb-8 max-w-lg leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             {t("index.newsletter_desc")}
             {/* The text is repetitive in your image; this is a truncated version */}
-          </p>
+          </motion.p>
 
           {/* Social Share Section */}
-          <div className="mt-4">
-            <h3 className="text-xl font-semibold mb-4 ">
+          <motion.div
+            className="mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <motion.h3
+              className="text-xl font-semibold mb-4"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              viewport={{ once: true }}
+            >
               {t("global.social_share")}
-            </h3>
-            <div className="flex space-x-4">
+            </motion.h3>
+            <motion.div
+              className="flex space-x-4"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              viewport={{ once: true }}
+            >
               <ul className="flex md:gap-8 gap-2 items-center">
                 <li>
                   <Link href={"https://facebook.com"}>
@@ -76,16 +116,36 @@ const NewsletterFooter = () => {
                   </Link>
                 </li>
               </ul>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
         {/* --- Right Column: Newsletter Form --- */}
-        <div className="flex flex-col">
-          <h2 className="text-3xl font-bold mb-6">
+        <motion.div
+          className="flex flex-col"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <motion.h2
+            className="text-3xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            viewport={{ once: true }}
+          >
             {t("index.newsletter_title")}
-          </h2>
-          <p className="text-gray-600 mb-8">{t("index.join_newsletter")}</p>
+          </motion.h2>
+          <motion.p
+            className="text-gray-600 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            viewport={{ once: true }}
+          >
+            {t("index.join_newsletter")}
+          </motion.p>
 
           <form className="space-y-4">
             {/* Input: First Name */}
@@ -119,7 +179,7 @@ const NewsletterFooter = () => {
               <ArrowRight className="w-5 h-5 ms-2 rtl:rotate-180" />
             </Button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 // --- DATA ---
 const allReviews = [
@@ -92,19 +93,42 @@ const InteractiveCustomerReviews = () => {
 
   return (
     <section className="relative md:py-10 py-8 container mx-auto bg-white overflow-hidden space-y-6">
-      <div className="text-center">
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         {/* Main Title */}
-        <h2
+        <motion.h2
           className="text-3xl sm:text-4xl font-bold mb-16"
           style={{ color: DARK_GREEN_TEXT }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
         >
           Customer Reviews
-        </h2>
+        </motion.h2>
 
         {/* Central Testimonial Block: Set to z-10 */}
-        <div className="relative z-10 bg-white p-6 sm:p-8 md:p-10 rounded-lg max-w-2xl mx-auto shadow-xl transition-opacity duration-500">
+        <motion.div
+          className="relative z-10 bg-white p-6 sm:p-8 md:p-10 rounded-lg max-w-2xl mx-auto shadow-xl transition-opacity duration-500"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          key={currentReview.id} // Re-animate when review changes
+        >
           {/* Main Avatar for the current review */}
-          <div className="w-16 h-16 rounded-full mx-auto -mt-20 mb-6 border-4 border-white shadow-lg overflow-hidden">
+          <motion.div
+            className="w-16 h-16 rounded-full mx-auto -mt-20 mb-6 border-4 border-white shadow-lg overflow-hidden"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6, type: "spring", stiffness: 200 }}
+            viewport={{ once: true }}
+          >
             <Image
               width={1000}
               height={1000}
@@ -112,7 +136,7 @@ const InteractiveCustomerReviews = () => {
               alt={currentReview.author}
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
 
           {/* Quote and Text */}
           <div className="flex justify-center items-start mb-6">
@@ -185,8 +209,8 @@ const InteractiveCustomerReviews = () => {
             </div>
           </div>
           {/* --- End Mobile Reviewer List --- */}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Scattered Avatars (Interactive - HIDDEN ON MD AND SMALLER SCREENS) */}
       {/* Set to z-20 to ensure they float above the z-10 central card */}

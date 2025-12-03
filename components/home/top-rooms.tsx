@@ -1,7 +1,10 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { motion } from "motion/react";
 
 // Data for each destination item
 const destinations = [
@@ -98,24 +101,60 @@ const TopRooms = () => {
   const t = useTranslations();
   return (
     <section className="md:py-10 py-6 container mx-auto space-y-6">
-      <div className="flex flex-wrap justify-between items-center ">
-        <h2 className="md:text-4xl sm:text-2xl text-lg font-extrabold">
+      <motion.div
+        className="flex flex-wrap justify-between items-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <motion.h2
+          className="md:text-4xl sm:text-2xl text-lg font-extrabold"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
           {t("index.top_rooms_title")}
-        </h2>
-        <div>
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
           <Link href={"/rooms"}>{t("global.see_all")}</Link>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8">
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+        viewport={{ once: true }}
+      >
         {destinations.map((destination, index) => (
-          <DestinationCard
+          <motion.div
             key={index}
-            name={destination.name}
-            tours={destination.tours}
-            img={destination.img}
-          />
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.5,
+              delay: index * 0.1,
+              ease: "easeOut"
+            }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <DestinationCard
+              name={destination.name}
+              tours={destination.tours}
+              img={destination.img}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

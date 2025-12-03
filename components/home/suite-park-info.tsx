@@ -1,7 +1,10 @@
+"use client";
+
 import { ArrowRightCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 
 // Use Heroicons for the SVGs (common practice in React/Tailwind projects)
 // Assuming you have them installed (npm install @heroicons/react)
@@ -66,37 +69,80 @@ const SuiteParkIntro = () => {
     <section className="container mx-auto md:py-10 py-6 space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
         {/* Left Column: Content */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-4xl sm:text-5xl lg:text-5xl font-bold leading-tight text-[#1f3731] mb-6">
+        <motion.div
+          className="flex flex-col justify-center"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <motion.h2
+            className="text-4xl sm:text-5xl lg:text-5xl font-bold leading-tight text-[#1f3731] mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             {t("index.we_make")}
             <br />
             {t("index.we_make_2")}
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-lg">
-            {t("index.we_make_desc")}
-          </p>
-          <Link
-            href="/rooms"
-            className="inline-flex gap-2 items-center justify-center w-fit px-8 py-3 bg-linear-to-l from-primary to-[#5F936C] text-white font-semibold rounded-lg shadow-md hover:from-[#387040] transition-colors duration-300"
+          </motion.h2>
+          <motion.p
+            className="text-lg text-gray-600 mb-8 max-w-lg"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
           >
-            <span>{t("index.explore_our_rooms")}</span>
-            {/* Simple Arrow SVG for visual flourish */}
-            <ArrowRightCircle className="rtl:rotate-180" />
-          </Link>
-        </div>
+            {t("index.we_make_desc")}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Link
+              href="/rooms"
+              className="inline-flex gap-2 items-center justify-center w-fit px-8 py-3 bg-linear-to-l from-primary to-[#5F936C] text-white font-semibold rounded-lg shadow-md hover:from-[#387040] transition-colors duration-300"
+            >
+              <span>{t("index.explore_our_rooms")}</span>
+              {/* Simple Arrow SVG for visual flourish */}
+              <ArrowRightCircle className="rtl:rotate-180" />
+            </Link>
+          </motion.div>
+        </motion.div>
 
         {/* Right Column: Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 sm:gap-y-16 py-4">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 sm:gap-y-16 py-4"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           {statItems.map((stat, index) => (
-            <StatCard
+            <motion.div
               key={index}
-              number={stat.number}
-              label={stat.label}
-              icon={stat.icon}
-              className={stat.positionClass}
-            />
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.1 + 0.5,
+                ease: "easeOut"
+              }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <StatCard
+                number={stat.number}
+                label={stat.label}
+                icon={stat.icon}
+                className={stat.positionClass}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
