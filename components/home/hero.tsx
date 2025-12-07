@@ -28,21 +28,12 @@ export default function Hero() {
           <CarouselContent>
             {Array.from({ length: 5 }).map((_, index) => (
               <CarouselItem key={index}>
-                <motion.div
+                <div
                   className="p-1"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.1,
-                    ease: "easeOut"
-                  }}
-                  viewport={{ once: true }}
+             
                 >
                   <Link href={"/rooms"}>
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.3 }}
+                    <div
                     >
                       <Image
                         src={"/imgs/hero-slider.png"}
@@ -51,9 +42,9 @@ export default function Hero() {
                         height={1000}
                         className="w-full rounded-xl"
                       />
-                    </motion.div>
+                    </div>
                   </Link>
-                </motion.div>
+                </div>
               </CarouselItem>
             ))}
           </CarouselContent>

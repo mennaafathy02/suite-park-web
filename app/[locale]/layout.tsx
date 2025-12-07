@@ -72,7 +72,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
-          <div className="flex-1">{children}</div>
+          <div className="flex-1 pt-28 overflow-hidden">{children}</div>
           <Footer />
         </NextIntlClientProvider>
       </body>

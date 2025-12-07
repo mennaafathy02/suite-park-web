@@ -10,27 +10,30 @@ import Link from "next/link";
 
 export default function RoomCard() {
   return (
-    <Link
-      href={"/rooms/room-1"}
-      className="md:p-4 p-2 rounded-md space-y-4 border"
-    >
-      <div className="relative">
-        <Image
-          src={"/imgs/room.jpg"}
-          alt=""
-          width={1000}
-          height={1000}
-          className="rounded-md max-h-44 object-cover"
-        />
+    <div className="md:p-4 p-2 rounded-md space-y-4 border">
+      <div className="relative overflow-hidden rounded-md">
+        <Link href={"/rooms/room-1"}>
+          <Image
+            src={"/imgs/room.jpg"}
+            alt=""
+            width={1000}
+            height={1000}
+            className="rounded-md h-full object-cover hover:scale-105 scale-100 transition-all duration-500"
+          />
+        </Link>
+
         {/* <div className="p-1 bg-white border rounded-full absolute top-2 start-2">
           <Heart className="md:size-6 size-4" />
         </div> */}
       </div>
       <div className="space-y-2">
-        <div className="text-stone-400 flex gap-2 items-center">
+        <Link
+          href={"/rooms/room-1"}
+          className="text-stone-400 flex gap-2 items-center  "
+        >
           <Globe className="size-5" />
           <span>Jeddah, Saudi Arabia</span>
-        </div>
+        </Link>
         <div className="text-primary">Suite · Apt 5 · Level 2</div>
         <div className="text-stone-400 flex flex-wrap gap-4 justify-between items-center">
           <div className="flex items-center gap-2">
@@ -43,14 +46,17 @@ export default function RoomCard() {
           </div>
         </div>
         <hr className="my-4" />
-        <div className="text-primary flex flex-wrap gap-4 items-center justify-between">
+        <Link
+          href={"/rooms/room-1"}
+          className="text-primary flex flex-wrap gap-4 items-center justify-between"
+        >
           <div className="flex items-center gap-2">
             <CalendarDaysIcon />
             <span>4 days</span>
           </div>
-          <div>From $189.36</div>
-        </div>
+          <div>Min Price $189.36</div>
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 }

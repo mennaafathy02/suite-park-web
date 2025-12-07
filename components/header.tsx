@@ -32,7 +32,7 @@ export default function Header() {
   };
 
   return (
-    <div className="">
+    <div className="fixed z-50 w-full bg-white">
       <div className="bg-primary-foreground">
         <div className="text-xs py-3 container mx-auto flex items-center justify-between gap-4">
           <div className="flex gap-8">
