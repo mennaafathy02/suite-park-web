@@ -4,7 +4,7 @@ import {
   Facebook,
   Instagram,
   Linkedin,
-  Mail,
+  // Mail,
   Menu,
   Phone,
   Search,
@@ -36,14 +36,16 @@ export default function Header() {
       <div className="bg-primary-foreground">
         <div className="text-xs py-3 container mx-auto flex items-center justify-between gap-4">
           <div className="flex gap-8">
-            <div className="flex gap-2 items-center">
-              <Phone className="text-primary size-4" />
-              <span className="hidden sm:block">(93) 123 456 6789</span>
-            </div>
-            <div className="flex gap-2 items-center">
+            <a href="tel:+966551962005" className="ml-3 hover:underline">
+              <div className="flex gap-2 items-center">
+                <Phone className="text-primary size-4" />
+                <span className="hidden sm:block">+966551962005</span>
+              </div>
+            </a>
+            {/* <div className="flex gap-2 items-center">
               <Mail className="text-primary size-4" />
               <span className="hidden sm:block">yourinfo@yourmail.com </span>
-            </div>
+            </div> */}
           </div>
           <ul className="flex md:gap-8 gap-2 items-center">
             <li>
