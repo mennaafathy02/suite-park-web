@@ -4,7 +4,7 @@
     "aboutus": "About us",
     "rooms": "Rooms",
     "contactus": "Contact us",
-    "contact_desc":"From local escapes to far-flung adventures, find what makes you happy anytime, anywhere",
+    "contact_desc": "From local escapes to far-flung adventures, find what makes you happy anytime, anywhere",
     "whyus": "Why choose Suite Park",
     "find_room": "Find a room with us.",
     "we_make": "We Make",
@@ -36,7 +36,15 @@
     "explore_our_rooms": "Explore our rooms",
     "amazing_tours": "Amazing Tours",
     "happy_customer": "Happy Customer",
-    "total_destinations": "Total Destinations"
+    "total_destinations": "Total Destinations",
+    "feature1_title": "The Ideal Strategic Location",
+    "feature1_desc": "Sweet Park boasts an exceptional location, bringing all essential services together in the same building. You won't need to leave the complex for your daily needs; a pharmacy, laundry, barbershop, and supermarket are all conveniently located nearby, in addition to a variety of international and local restaurants such as Pizza Hut, Lorenzo, and Beit Al Ta'mi.",
+    "feature2_title": "International Dining Options Near You",
+    "feature2_desc": " Enjoy an endless variety of international and local dining options just steps from your suite's door. The building is adjacent to renowned chains like Al Baik, McDonald's, and the long-established Al Bukhari restaurants, ensuring you and your family have access to hot and convenient meals anytime.",
+    "feature3_title": "Exclusive Services for Guest Convenience",
+    "feature3_desc": "We believe your time is valuable, so we offer an exclusive and complimentary service for our valued guests; our team will handle and deliver your purchases from Shops and amenities are conveniently located right next to your suite. Relax and leave the simple daily tasks to us.",
+    "feature4_title": "Move Smart & Easy",
+    "feature4_desc": "Our location is designed to provide you with maximum convenience; the hotel is situated opposite a fully integrated 'Naft' station, making it easy to refuel your vehicle and access quick services without any delays. Our location is not just a place to stay, but the perfect starting point for all your destinations in Jeddah."
   },
   "global": {
     "search_here": "Search here",
@@ -46,7 +54,7 @@
     "last_name": "Last Name",
     "social_share": "Social Share",
     "sort_by": "Sort by",
-    "show_rooms":"Show Rooms"
+    "show_rooms": "Show Rooms"
   },
   "search": {
     "results_for": "Search Results for",

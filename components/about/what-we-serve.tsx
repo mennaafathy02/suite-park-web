@@ -9,23 +9,23 @@ export default function WhatWeServe() {
   const items = [
     {
       icon: <Ticket className="size-8 text-primary" />,
-      title: "Ultimate flexibility",
-      desc: "You're in control, with free cancellation and payment options to satisfy any plan or budget.",
+      title: "feature1_title",
+      desc: "feature1_desc",
     },
     {
       icon: <BookOpen className="size-8 text-primary" />,
-      title: "Memorable experiences",
-      desc: "Browse and book tours and activities so incredible, you'll want to tell your friends.",
+      title: "feature2_title",
+      desc: "feature2_desc",
     },
     {
       icon: <Gem className="size-8 text-primary" />,
-      title: "Quality at our core",
-      desc: "High-quality standards. Millions of reviews. A tourz company.",
+      title: "feature3_title",
+      desc: "feature3_desc",
     },
     {
       icon: <Medal className="size-8 text-primary" />,
-      title: "Award-winning support",
-      desc: "New price? New plan? No problem. We're here to help, 24/7.",
+      title: "feature4_title",
+      desc: "feature4_desc",
     },
   ];
 
@@ -118,7 +118,7 @@ export default function WhatWeServe() {
               }}
               viewport={{ once: true }}
             >
-              {el.title}
+              {t(`index.${el.title}`)}
             </motion.h3>
             <motion.p
               className="text-primary/80"
@@ -130,7 +130,7 @@ export default function WhatWeServe() {
               }}
               viewport={{ once: true }}
             >
-              {el.desc}
+              {t(`index.${el.desc}`)}
             </motion.p>
           </motion.div>
         ))}
