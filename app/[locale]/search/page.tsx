@@ -1,4 +1,4 @@
-import NewsletterFooter from "@/components/home/newsletter";
+// import NewsletterFooter from "@/components/home/newsletter";
 import PlacesList from "@/components/rooms/places-list";
 // import { useTranslations } from "next-intl";
 
@@ -15,7 +15,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   return (
     <>
       <PlacesList searchQuery={query} />
-      <NewsletterFooter />
+      {/* <NewsletterFooter /> */}
     </>
   );
 }

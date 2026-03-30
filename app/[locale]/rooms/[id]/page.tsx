@@ -1,4 +1,4 @@
-import NewsletterFooter from "@/components/home/newsletter";
+// import NewsletterFooter from "@/components/home/newsletter";
 import RoomDescription from "@/components/room/room-description";
 import RoomInfo from "@/components/room/room-info";
 
@@ -7,7 +7,7 @@ export default function Room() {
     <>
       <RoomInfo />
       <RoomDescription />
-      <NewsletterFooter />
+      {/* <NewsletterFooter /> */}
     </>
   );
 }

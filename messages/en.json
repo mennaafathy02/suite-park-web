@@ -4,12 +4,13 @@
     "aboutus": "About us",
     "rooms": "Rooms",
     "contactus": "Contact us",
-    "whyus": "Why choose Suite Parl",
+    "contact_desc":"From local escapes to far-flung adventures, find what makes you happy anytime, anywhere",
+    "whyus": "Why choose Suite Park",
     "find_room": "Find a room with us.",
     "we_make": "We Make",
     "we_make_2": "Your Stay Easy at Suite Park",
     "we_make_desc": "Enjoy a unique experience at Suite Park Hotel, where comfort meets elegance. Our hotel offers the perfect blend of relaxation and luxury—making every stay unforgettable.",
-    "popular_title": "Popular Things to Do Near Suite Park",
+    "popular_title": "Multiple photos of the hotel",
     "top_rooms_title": "Top Rooms at Suite Park",
     "newsletter_desc": "Welcome to Suite Park, Where step beyond the ordinary and enter the realm of unparalleled sophistication at Suite Park. We curate an experience reserved for those who recognize and appreciate true excellence. This is where architectural grandeur meets personalized artistry in service",
     "explore_rooms_title": "Explore 300+ Places in Barcelona",
@@ -44,7 +45,8 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "social_share": "Social Share",
-    "sort_by": "Sort by"
+    "sort_by": "Sort by",
+    "show_rooms":"Show Rooms"
   },
   "search": {
     "results_for": "Search Results for",

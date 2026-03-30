@@ -1,4 +1,8 @@
-import { MapPin, Phone, Mail } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  // Mail
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./language-switcher";
 
@@ -51,23 +55,24 @@ export default function Footer() {
               <div className="flex items-start gap-2">
                 <MapPin size={20} className="mt-1 shrink-0 text-primary" />
                 <div className="ml-3">
-                  <p>Mellow hotel & resort</p>
-                  <p>123 Serenity Avenue</p>
-                  <p>Tranquil City, Peaceful State</p>
-                  <p>Relaxingland</p>
+                  <p>
+                    Ahmad Ibn Zaydun، الهمذانى، شارع أحمد الهمذانى سويت بارك جدة
+                    - Suite park Jeddah، 7760 طريق الكورنيش الفرعي, Jeddah
+                    23417, Saudi Arabia
+                  </p>
                 </div>
               </div>
 
               {/* Phone */}
               <div className="flex items-center gap-2">
                 <Phone size={20} className="shrink-0 text-primary" />
-                <a href="tel:+93123456789" className="ml-3 hover:underline">
-                  (93) 123 456 789
+                <a href="tel:+966551962005" className="ml-3 hover:underline">
+                  +966551962005
                 </a>
               </div>
 
               {/* Email */}
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Mail size={20} className="shrink-0 to-primary" />
                 <a
                   href="mailto:yourinfo@yourmail.com"
@@ -75,7 +80,7 @@ export default function Footer() {
                 >
                   yourinfo@yourmail.com
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
 

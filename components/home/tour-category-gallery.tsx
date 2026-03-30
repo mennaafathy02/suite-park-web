@@ -7,37 +7,37 @@ import React from "react";
 const tourCategories = [
   {
     title: "Cruises",
-    imgUrl: "/imgs/popular-1.png",
+    imgUrl: "/imgs/places/place-1.jpg",
     // Takes one column and one row
     gridClasses: "lg:col-span-1 lg:row-span-1",
   },
   {
     title: "Museum Tour",
-    imgUrl: "/imgs/popular-3.png",
+    imgUrl: "/imgs/places/place-2.jpg",
     // Takes the 1st column and the 2nd row
     gridClasses: "lg:col-span-2 lg:row-span-2",
   },
   {
     title: "Beach Tours",
-    imgUrl: "/imgs/popular-4.png",
+    imgUrl: "/imgs/places/place-3.jpg",
     // Takes the 2nd and 3rd columns and both rows
     gridClasses: "lg:col-span-3 lg:row-span-1",
   },
   {
     title: "City Tours",
-    imgUrl: "/imgs/popular-2.png",
+    imgUrl: "/imgs/places/place-4.jpg",
     // Takes the 4th, 5th, and 6th columns on the first row
     gridClasses: "lg:col-span-1 lg:row-span-1",
   },
   {
     title: "Food",
-    imgUrl: "/imgs/popular-5.png",
+    imgUrl: "/imgs/places/place-5.jpg",
     // Takes the 4th column and the 2nd row
     gridClasses: "lg:col-span-1 lg:row-span-1",
   },
   {
     title: "Hiking",
-    imgUrl: "/imgs/popular-6.png",
+    imgUrl: "/imgs/places/place-6.jpg",
     // Takes the 5th and 6th columns on the second row
     gridClasses: "lg:col-span-2 lg:row-span-1",
   },
@@ -78,9 +78,9 @@ const TourCard = ({
 
       {/* Text Content */}
       <div className="absolute bottom-0 left-0 p-6">
-        <h3 className="text-white text-xl font-semibold z-10 relative">
+        {/* <h3 className="text-white text-xl font-semibold z-10 relative">
           {title}
-        </h3>
+        </h3> */}
       </div>
     </div>
   );
@@ -96,7 +96,7 @@ const SpecificTourGridGallery = () => {
           {t("index.popular_title")}
         </h2>
         <div>
-          <Link href={"/rooms"}>{t("global.see_all")}</Link>
+          <Link href={"/rooms"}>{t("global.show_rooms")}</Link>
         </div>
       </div>
       <div

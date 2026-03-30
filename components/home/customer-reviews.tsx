@@ -1,253 +1,240 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
-// --- DATA ---
-const allReviews = [
+// 1. Define a clear interface for the Review
+interface Review {
+  id: number;
+  quote: string;
+  author: string;
+  country: string;
+  flag: string;
+  imgSrc: string;
+  size: string;
+  position?: {
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+  };
+}
+
+// 2. Cast your initial data to that interface
+const initialReviews: Review[] = [
   {
     id: 1,
-    quote:
-      "This place is exactly like the picture posted on Tripto. Great service, we had a great stay!",
-    author: "Ethan Rogrinho",
-    country: "Malaysia",
-    flag: "🇲🇾",
-    imgSrc: "/imgs/user-1.svg",
-    position: { top: "25%", left: "20%" },
-    size: "w-12 h-12",
+    quote: "The attention to detail here is unmatched. From the personalized welcome to the pristine room condition, every second felt like a five-star dream.",
+    author: "James Anderson",
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    imgSrc: "/imgs/icons/user-male-1.svg", // Replace with your icon paths
+    position: { top: "15%", left: "12%" },
+    size: "w-14 h-14",
   },
   {
     id: 2,
-    quote:
-      "Exceptional service and beautiful ambiance. The staff made our stay truly unforgettable.",
-    author: "Sarah Jenkins",
-    country: "USA",
-    flag: "🇺🇸",
-    imgSrc: "/imgs/user-2.svg",
-    position: { top: "25%", right: "20%" },
-    size: "w-10 h-10",
+    quote: "As a frequent traveler, I'm picky about breakfast. The rooftop buffet here wasn't just food; it was a culinary experience with a breathtaking view.",
+    author: "Elena Rossi",
+    country: "Italy",
+    flag: "🇮🇹",
+    imgSrc: "/imgs/icons/user-female-1.svg",
+    position: { top: "18%", right: "14%" },
+    size: "w-12 h-12",
   },
   {
     id: 3,
-    quote:
-      "A perfect blend of comfort and luxury. Highly recommend Suite Park for any vacation!",
-    author: "Ricardo Mendes",
-    country: "Brazil",
-    flag: "🇧🇷",
-    imgSrc: "/imgs/user-3.svg",
-    position: { bottom: "25%", left: "20%" },
-    size: "w-10 h-10",
+    quote: "Perfect location for exploring the city. We were within walking distance of the main square, yet the room was incredibly quiet and peaceful.",
+    author: "Marcus Schneider",
+    country: "Germany",
+    flag: "🇩🇪",
+    imgSrc: "/imgs/icons/user-male-2.svg",
+    position: { bottom: "22%", left: "16%" },
+    size: "w-12 h-12",
   },
   {
     id: 4,
-    quote:
-      "The view was spectacular and the facilities were top-notch. Can't wait to visit again.",
-    author: "Aisha Khan",
-    country: "UAE",
-    flag: "🇦🇪",
-    imgSrc: "/imgs/user-4.svg",
-    position: { bottom: "25%", right: "20%" },
-    size: "w-12 h-12",
+    quote: "The concierge team saved our trip! They managed to get us a last-minute table at a Michelin-star restaurant. Exceptional service beyond words.",
+    author: "Sophia Chen",
+    country: "Singapore",
+    flag: "🇸🇬",
+    imgSrc: "/imgs/icons/user-female-2.svg",
+    position: { bottom: "18%", right: "18%" },
+    size: "w-14 h-14",
   },
   {
     id: 5,
-    quote: "The staff were incredibly friendly and accommodating. Five stars!",
-    author: "Kenji Tanaka",
-    country: "Japan",
-    flag: "🇯🇵",
-    imgSrc: "/imgs/user-5.svg",
-    position: { top: "50%", left: "5%" },
-    size: "w-10 h-10",
-  },
-  {
-    id: 6,
-    quote:
-      "Truly a peaceful retreat. Everything was spotlessly clean and comfortable.",
-    author: "Olga Petrova",
-    country: "Russia",
-    flag: "🇷🇺",
-    imgSrc: "/imgs/user-6.svg",
-    position: { top: "50%", right: "5%" },
+    quote: "A true oasis of calm. The spa facilities are top-tier, and the aromatherapy session was exactly what I needed after a long flight.",
+    author: "Amara Okafor",
+    country: "Nigeria",
+    flag: "🇳🇬",
+    imgSrc: "/imgs/icons/user-female-3.svg",
+    position: { top: "52%", left: "6%" },
     size: "w-12 h-12",
   },
   {
-    // Added 7th Review for completeness
+    id: 6,
+    quote: "Traveling with kids is usually stressful, but the family suite and the staff's kindness toward our little ones made this our best vacation yet.",
+    author: "David Miller",
+    country: "Canada",
+    flag: "🇨🇦",
+    imgSrc: "/imgs/icons/user-male-3.svg",
+    position: { top: "48%", right: "8%" },
+    size: "w-14 h-14",
+  },
+  {
     id: 7,
-    quote:
-      "Excellent location and smooth check-in process. We felt right at home.",
-    author: "Javier Sanchez",
+    quote: "The interior design is stunning—a perfect mix of modern luxury and local heritage. I spent the first hour just taking photos of the lobby!",
+    author: "Lucia Fernandez",
     country: "Spain",
     flag: "🇪🇸",
-    imgSrc: "/imgs/user-7.svg",
-    position: { top: "40%", left: "35%" },
-    size: "w-10 h-10",
+    imgSrc: "/imgs/icons/user-female-4.svg",
+    position: { top: "30%", left: "25%" },
+    size: "w-11 h-11",
   },
 ];
 
 const InteractiveCustomerReviews = () => {
-  // Initialize with allReviews[0] or default if 7 reviews are present
-  const [currentReview, setCurrentReview] = useState(allReviews[0]);
+  // 3. Initialize states with the explicit Review type
+  const [activeReview, setActiveReview] = useState<Review>(initialReviews[0]);
+  const [floatingReviews, setFloatingReviews] = useState<Review[]>(
+    initialReviews.slice(1),
+  );
 
   const DARK_GREEN_TEXT = "#1f3731";
   const LIGHT_GREEN_TEXT = "#387040";
 
+  const handleSwitch = (selectedReview: Review) => {
+    // This will now work because all 'Review' objects share the same structure
+    const oldActiveWithNewPos: Review = {
+      ...activeReview,
+      position: selectedReview.position,
+      size: selectedReview.size,
+    };
+
+    setActiveReview(selectedReview);
+
+    setFloatingReviews((prev) => [
+      ...prev.filter((r) => r.id !== selectedReview.id),
+      oldActiveWithNewPos,
+    ]);
+  };
+
   return (
-    <section className="relative md:py-10 py-8 container mx-auto bg-white overflow-hidden space-y-6">
-      <motion.div
-        className="text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        {/* Main Title */}
-        <motion.h2
+    <section className="relative md:py-20 py-8 container mx-auto bg-white overflow-hidden min-h-[600px] flex flex-col justify-center">
+      <div className="text-center">
+        <h2
           className="text-3xl sm:text-4xl font-bold mb-16"
           style={{ color: DARK_GREEN_TEXT }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
         >
           Customer Reviews
-        </motion.h2>
+        </h2>
 
-        {/* Central Testimonial Block: Set to z-10 */}
-        <motion.div
-          className="relative z-10 bg-white p-6 sm:p-8 md:p-10 rounded-lg max-w-2xl mx-auto shadow-xl transition-opacity duration-500"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          key={currentReview.id} // Re-animate when review changes
-        >
-          {/* Main Avatar for the current review */}
-          <motion.div
-            className="w-16 h-16 rounded-full mx-auto -mt-20 mb-6 border-4 border-white shadow-lg overflow-hidden"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.6, type: "spring", stiffness: 200 }}
-            viewport={{ once: true }}
-          >
-            <Image
-              width={1000}
-              height={1000}
-              src={currentReview.imgSrc}
-              alt={currentReview.author}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+        {/* Central Card */}
+        <div className="relative z-10 max-w-2xl mx-auto px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeReview.id}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="bg-white p-8 md:p-12 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-gray-50"
+            >
+              <div className="w-20 h-20 rounded-full mx-auto -mt-20 md:-mt-24 mb-6 border-4 border-white shadow-xl overflow-hidden bg-gray-100">
+                <Image
+                  width={80}
+                  height={80}
+                  src={activeReview.imgSrc}
+                  alt={activeReview.author}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-          {/* Quote and Text */}
-          <div className="flex justify-center items-start mb-6">
-            <span
-              className="text-5xl font-serif mr-2 opacity-30"
-              style={{ color: LIGHT_GREEN_TEXT }}
-            >
-              &ldquo;
-            </span>
-            <p
-              className="text-xl sm:text-2xl font-medium text-gray-700"
-              style={{ color: DARK_GREEN_TEXT }}
-            >
-              {currentReview.quote}
-            </p>
-            <span
-              className="text-5xl font-serif ml-2 opacity-30"
-              style={{ color: LIGHT_GREEN_TEXT }}
-            >
-              &rdquo;
-            </span>
-          </div>
-
-          {/* Author and Country */}
-          <div className="mt-8">
-            <p
-              className="text-lg font-semibold"
-              style={{ color: LIGHT_GREEN_TEXT }}
-            >
-              {currentReview.author}
-            </p>
-            <p className="text-sm text-gray-500 mt-1">
-              {currentReview.flag} {currentReview.country}
-            </p>
-          </div>
-
-          {/* --- Responsive Mobile Reviewer List --- */}
-          <div className="mt-10 md:hidden">
-            <h4 className="text-sm text-gray-500 mb-4">
-              Click to view other reviews:
-            </h4>
-            <div className="flex justify-center space-x-3 overflow-x-auto p-2">
-              {allReviews.map((reviewer) => (
-                <div
-                  key={reviewer.id}
-                  onClick={() => setCurrentReview(reviewer)}
-                  className={`shrink-0 w-12 h-12 rounded-full overflow-hidden border-2 cursor-pointer transition-all duration-200 
-                            ${
-                              reviewer.id === currentReview.id
-                                ? "border-4 transform scale-110"
-                                : "opacity-60 border-gray-200"
-                            }`}
-                  style={{
-                    // Apply green border color when active
-                    borderColor:
-                      reviewer.id === currentReview.id
-                        ? LIGHT_GREEN_TEXT
-                        : undefined,
-                  }}
+              <div className="relative">
+                <span
+                  className="text-6xl absolute -top-4 -left-4 opacity-10"
+                  style={{ color: LIGHT_GREEN_TEXT }}
                 >
-                  <Image
-                    width={1000}
-                    height={1000}
-                    src={reviewer.imgSrc}
-                    alt={reviewer.author}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* --- End Mobile Reviewer List --- */}
-        </motion.div>
-      </motion.div>
+                  &ldquo;
+                </span>
+                <p
+                  className="text-xl md:text-2xl font-medium leading-relaxed"
+                  style={{ color: DARK_GREEN_TEXT }}
+                >
+                  {activeReview.quote}
+                </p>
+                <span
+                  className="text-6xl absolute -bottom-10 -right-2 opacity-10"
+                  style={{ color: LIGHT_GREEN_TEXT }}
+                >
+                  &rdquo;
+                </span>
+              </div>
 
-      {/* Scattered Avatars (Interactive - HIDDEN ON MD AND SMALLER SCREENS) */}
-      {/* Set to z-20 to ensure they float above the z-10 central card */}
-      <div className="hidden md:block absolute inset-0 w-full h-full z-20 pointer-events-none">
-        <div className="relative w-full h-full">
-          {allReviews.map((reviewer) => (
-            <div
-              key={reviewer.id}
-              onClick={() => setCurrentReview(reviewer)}
-              // Resetting pointer-events for the clickable area
-              className={`absolute transform -translate-x-1/2 -translate-y-1/2 z-20 
-                          ${
-                            reviewer.size
-                          } rounded-full overflow-hidden border-2 cursor-pointer pointer-events-auto
-                          hover:scale-110 transition-transform duration-300
-                          ${
-                            reviewer.id === currentReview.id
-                              ? "opacity-0 pointer-events-none" // Hide current avatar
-                              : ""
-                          }`}
-              style={{
-                ...reviewer.position,
-                borderColor: LIGHT_GREEN_TEXT, // Add border back
-              }}
-            >
-              <Image
-                width={1000}
-                height={1000}
-                src={reviewer.imgSrc}
-                alt={reviewer.author}
-                className="w-full h-full object-cover opacity-75 hover:opacity-100 transition-opacity"
-              />
-            </div>
-          ))}
+              <div className="mt-10">
+                <p
+                  className="text-lg font-bold"
+                  style={{ color: LIGHT_GREEN_TEXT }}
+                >
+                  {activeReview.author}
+                </p>
+                <p className="text-sm text-gray-400 uppercase tracking-widest mt-1">
+                  {activeReview.flag} {activeReview.country}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
-      {/* --- End Floating Avatars --- */}
+
+      {/* Floating Interactive Avatars */}
+      <div className="hidden md:block absolute inset-0 pointer-events-none">
+        {floatingReviews.map((reviewer) => (
+          <motion.div
+            key={reviewer.id}
+            layoutId={reviewer.id.toString()} // This handles the smooth sliding "switch"
+            onClick={() => handleSwitch(reviewer)}
+            className={`absolute cursor-pointer pointer-events-auto rounded-full p-1 border-2 transition-colors hover:border-green-500 bg-white shadow-lg ${reviewer.size}`}
+            style={{
+              ...reviewer.position,
+              borderColor: "#e5e7eb",
+              zIndex: 20,
+            }}
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
+            <div className="w-full h-full rounded-full overflow-hidden">
+              <Image
+                width={60}
+                height={60}
+                src={reviewer.imgSrc}
+                alt={reviewer.author}
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all"
+              />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Mobile Selector */}
+      <div className="flex md:hidden justify-center gap-3 mt-8 px-4 overflow-x-auto pb-4">
+        {floatingReviews.map((reviewer) => (
+          <button
+            key={reviewer.id}
+            onClick={() => handleSwitch(reviewer)}
+            className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200 shrink-0"
+          >
+            <Image
+              width={48}
+              height={48}
+              src={reviewer.imgSrc}
+              alt=""
+              className="object-cover"
+            />
+          </button>
+        ))}
+      </div>
     </section>
   );
 };

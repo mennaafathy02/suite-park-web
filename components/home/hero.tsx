@@ -7,15 +7,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Link } from "@/navigation";
-import { useLocale } from "next-intl";
+// import { Link } from "@/navigation";
 import Image from "next/image";
 import { motion } from "motion/react";
 
 export default function Hero() {
-  const locale = useLocale();
-  const dir = locale === "ar" ? "rtl" : "ltr";
-
+  const images = [
+    "/imgs/hero/home-slider-1.webp",
+    "/imgs/hero/home-slider-4.jpg",
+    "/imgs/hero/home-slider-15.jpg",
+    "/imgs/hero/home-slider-14.jpg",
+    "/imgs/hero/home-slider-6.jpg",
+    "/imgs/hero/home-slider-9.jpg",
+    "/imgs/hero/home-slider-18.jpg",
+  ];
   return (
     <section className="flex justify-center items-center container mx-auto md:pb-10 pb-6">
       <motion.div
@@ -24,32 +29,26 @@ export default function Hero() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="w-full"
       >
-        <Carousel dir={dir} className="w-full">
+        <Carousel dir={"ltr"} className="w-full">
           <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {images.map((src, index) => (
               <CarouselItem key={index}>
-                <div
-                  className="p-1"
-             
-                >
-                  <Link href={"/rooms"}>
-                    <div
-                    >
-                      <Image
-                        src={"/imgs/hero-slider.png"}
-                        alt="slider"
-                        width={1000}
-                        height={1000}
-                        className="w-full rounded-xl"
-                      />
-                    </div>
-                  </Link>
+                <div className="p-1">
+                  <div>
+                    <Image
+                      src={src}
+                      alt="slider"
+                      width={1000}
+                      height={1000}
+                      className="w-full h-[80vh] aspect-video object-cover object-bottom rounded-xl"
+                    />
+                  </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="end-0 translate-x-1/2" />
-          <CarouselNext className="start-0 -translate-x-1/2" />
+          <CarouselPrevious className="end-0 size-10 [&_svg]:size-10! translate-x-[50%]" />
+          <CarouselNext className="start-0 size-10 [&_svg]:size-10! -translate-x-[50%]" />
         </Carousel>
       </motion.div>
     </section>
