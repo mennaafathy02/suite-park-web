@@ -1,14 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Room } from "./types";
-
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ?? "";
-
-function getImageUrl(path: string): string {
-  if (path.startsWith("http")) return path;
-  return `${API_BASE}/${path.replace(/^\//, "")}`;
-}
+import { getImageUrl } from "@/lib/image";
 
 interface RoomCardProps {
   room: Room;
@@ -21,8 +14,8 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
   const typeName =
     locale === "ar" ? room.type_name_ar : room.type_name_en;
   const wehda = locale === "ar" ? room.wehda_name_ar : room.wehda_name_en;
-  const imageSrc = room.images?.[0]?.path
-    ? getImageUrl(room.images[0].path)
+  const imageSrc = room.thumbnails?.[0]?.path
+    ? getImageUrl(room.thumbnails[0].path)
     : "/imgs/room.jpg";
 
   const tags = [typeName, wehda].filter(Boolean);
@@ -54,7 +47,7 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
 
           <div className="flex flex-col items-end gap-2">
             <div className="text-sm text-gray-700 font-medium">
-              {room.min_price?.toLocaleString()} - {room.max_price?.toLocaleString()} SAR
+              {room.price?.toLocaleString()} SAR
             </div>
           </div>
         </div>

@@ -1,12 +1,20 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import RoomCard from "../room-card";
-import Link from "next/link";
+import { useTranslations, useLocale } from "next-intl";
+import RoomCard, { RoomCardSkeleton } from "../rooms/room-card";
+import { Link } from "@/i18n/routing";
 import { motion } from "motion/react";
+import { useRooms } from "../rooms/hooks/useRooms";
 
 export default function ChooseRoom() {
   const t = useTranslations();
+  const locale = useLocale();
+  const { data: roomsResponse, isLoading } = useRooms({
+    page: 1,
+    per_page: 8,
+  });
+  const rooms = roomsResponse?.data ?? [];
+
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-8">
       <motion.div
@@ -31,7 +39,7 @@ export default function ChooseRoom() {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <Link href={"/rooms"} >{t("global.see_all")}</Link>
+          <Link href="/rooms">{t("global.see_all")}</Link>
         </motion.div>
       </motion.div>
 
@@ -42,14 +50,13 @@ export default function ChooseRoom() {
         transition={{ duration: 0.8, delay: 0.6 }}
         viewport={{ once: true }}
       >
-        {Array.from({ length: 8 }).map((_, index) => (
-          <div
-            key={index}
-       
-           >
-            <RoomCard />
-          </div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <RoomCardSkeleton key={index} />
+            ))
+          : rooms.map((room) => (
+              <RoomCard key={room.id} room={room} locale={locale} />
+            ))}
       </motion.div>
     </section>
   );

@@ -6,6 +6,7 @@ import { Grid2X2, List } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useRooms } from "./hooks/useRooms";
+import { useFilterNazels } from "@/components/nazels/hooks/useFilterNazels";
 
 // -------------------- Components --------------------
 interface SortDropdownProps {
@@ -36,9 +37,13 @@ function SortDropdown({ value, onChange }: SortDropdownProps) {
 // -------------------- Main Component --------------------
 interface PlacesListProps {
   searchQuery?: string;
+  typeFilter?: string;
 }
 
-export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
+export default function PlacesList({
+  searchQuery = "",
+  typeFilter = "",
+}: PlacesListProps) {
   const t = useTranslations();
   const locale = useLocale();
   const [sort, setSort] = useState<SortType>("recommended");
@@ -46,20 +51,53 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
   const [layout, setLayout] = useState<"grid" | "list">("grid");
   const perPage = 4;
 
-  const { data: roomsResponse, isLoading, isError } = useRooms({
-    page,
-    per_page: perPage,
-  });
+  const hasTypeFilter = !!typeFilter;
 
-  const rooms = useMemo(() => roomsResponse?.data ?? [], [roomsResponse]);
-  const totalPages = roomsResponse?.last_page ?? 1;
-  const totalResults = roomsResponse?.total ?? 0;
+  // Build filter params based on locale
+  const filterParams = useMemo(
+    () =>
+      hasTypeFilter
+        ? locale === "ar"
+          ? { name_ar: typeFilter }
+          : { name_en: typeFilter }
+        : {},
+    [hasTypeFilter, typeFilter, locale],
+  );
 
-  // Reset page when search changes
+  // Regular rooms query - only enabled when no type filter
+  const {
+    data: roomsResponse,
+    isLoading: isLoadingRooms,
+    isError: isErrorRooms,
+  } = useRooms({ page, per_page: perPage }, { enabled: !hasTypeFilter });
+
+  // Nazel filter query - only enabled when type filter is present
+  const {
+    data: nazelFilterResponse,
+    isLoading: isLoadingFilter,
+    isError: isErrorFilter,
+  } = useFilterNazels(filterParams);
+
+  const isLoading = hasTypeFilter ? isLoadingFilter : isLoadingRooms;
+  const isError = hasTypeFilter ? isErrorFilter : isErrorRooms;
+
+  const rooms = useMemo(() => {
+    if (hasTypeFilter) {
+      return nazelFilterResponse?.data?.flatMap((nazel) => nazel.rooms) ?? [];
+    }
+    return roomsResponse?.data ?? [];
+  }, [hasTypeFilter, nazelFilterResponse, roomsResponse]);
+
+  const totalPages = hasTypeFilter ? 1 : (roomsResponse?.last_page ?? 1);
+  const totalResults = hasTypeFilter
+    ? rooms.length
+    : (roomsResponse?.total ?? 0);
+
+  // Reset page when search or filter changes
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, typeFilter]);
 
   // Filter by search query (client-side on current page)
   const filtered = useMemo(() => {
@@ -81,10 +119,10 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
     const copy = [...filtered];
 
     if (sort === "price-asc") {
-      return copy.sort((a, b) => a.min_price - b.min_price);
+      return copy.sort((a, b) => a.price - b.price);
     }
     if (sort === "price-desc") {
-      return copy.sort((a, b) => b.min_price - a.min_price);
+      return copy.sort((a, b) => b.price - a.price);
     }
     if (sort === "rating") {
       return copy.sort((a, b) => b.stars - a.stars);
@@ -100,7 +138,9 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
         <h2 className="text-2xl font-semibold text-gray-900">
           {searchQuery
             ? `${t("search.results_for")} "${searchQuery}" (${totalResults} ${t("search.found")})`
-            : t("index.explore_rooms_title")}
+            : typeFilter
+              ? `${typeFilter} (${totalResults})`
+              : t("index.explore_rooms_title")}
         </h2>
 
         <div className="flex items-center gap-4 w-full justify-between">

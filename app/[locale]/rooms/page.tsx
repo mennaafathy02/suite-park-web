@@ -1,11 +1,18 @@
-// import NewsletterFooter from "@/components/home/newsletter";
 import PlacesList from "@/components/rooms/places-list";
 
-export default function Rooms() {
+interface RoomsPageProps {
+  searchParams: Promise<{
+    type?: string;
+  }>;
+}
+
+export default async function Rooms({ searchParams }: RoomsPageProps) {
+  const params = await searchParams;
+  const typeFilter = params.type || "";
+
   return (
     <>
-      <PlacesList />
-      {/* <NewsletterFooter /> */}
+      <PlacesList typeFilter={typeFilter} />
     </>
   );
 }
