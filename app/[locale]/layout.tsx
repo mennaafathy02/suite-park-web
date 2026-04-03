@@ -7,6 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import QueryProvider from "@/components/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -71,9 +72,11 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          <div className="flex-1 pt-28 overflow-hidden">{children}</div>
-          <Footer />
+          <QueryProvider>
+            <Header />
+            <div className="flex-1 pt-28 overflow-hidden">{children}</div>
+            <Footer />
+          </QueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

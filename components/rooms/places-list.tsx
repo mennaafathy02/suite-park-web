@@ -1,22 +1,11 @@
 "use client";
-import React, { useMemo, useState } from "react";
-import { Place, SortType } from "./types";
-import RoomCard from "./room-card";
+import React, { useEffect, useMemo, useState } from "react";
+import { SortType, Room } from "./types";
+import RoomCard, { RoomCardSkeleton } from "./room-card";
 import { Grid2X2, List } from "lucide-react";
 import { useTranslations } from "next-intl";
-
-// -------------------- Mock Data --------------------
-const placesMock: Place[] = Array.from({ length: 8 }).map((_, i) => ({
-  id: i + 1,
-  name: "Melia Barcelona Sky",
-  location: "Poblenou",
-  price: "$1,000 - $1,500",
-  image: "/imgs/room.jpg",
-  badges: ["Best Value"],
-  tags: ["Sp Hotel", "Premium Room", "King Bed"],
-  features: ["Free cancellation", "Sp access", "Beach view"],
-  rating: 4.8,
-}));
+import { useLocale } from "next-intl";
+import { useRooms } from "./hooks/useRooms";
 
 // -------------------- Components --------------------
 interface SortDropdownProps {
@@ -51,59 +40,57 @@ interface PlacesListProps {
 
 export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const [sort, setSort] = useState<SortType>("recommended");
   const [page, setPage] = useState<number>(1);
-  // const [favorites, setFavorites] = useState<Set<number>>(new Set());
   const [layout, setLayout] = useState<"grid" | "list">("grid");
-  const perPage = 4; // 2 columns * 2 rows
+  const perPage = 4;
 
-  // Filter by search query
-  const filtered = useMemo(() => {
-    if (!searchQuery) return placesMock;
+  const { data: roomsResponse, isLoading, isError } = useRooms({
+    page,
+    per_page: perPage,
+  });
 
-    const query = searchQuery.toLowerCase();
-    return placesMock.filter((place) => {
-      return (
-        place.name.toLowerCase().includes(query) ||
-        place.location.toLowerCase().includes(query) ||
-        place.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-        place.features.some((feature) => feature.toLowerCase().includes(query))
-      );
-    });
+  const rooms = useMemo(() => roomsResponse?.data ?? [], [roomsResponse]);
+  const totalPages = roomsResponse?.last_page ?? 1;
+  const totalResults = roomsResponse?.total ?? 0;
+
+  // Reset page when search changes
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPage(1);
   }, [searchQuery]);
 
-  // sorting logic
+  // Filter by search query (client-side on current page)
+  const filtered = useMemo(() => {
+    if (!searchQuery || !rooms.length) return rooms;
+
+    const query = searchQuery.toLowerCase();
+    return rooms.filter((room: Room) => {
+      const name = locale === "ar" ? room.name_ar : room.name_en;
+      const location = locale === "ar" ? room.location_ar : room.location_en;
+      return (
+        name?.toLowerCase().includes(query) ||
+        location?.toLowerCase().includes(query)
+      );
+    });
+  }, [rooms, searchQuery, locale]);
+
+  // Sorting logic (client-side on current page)
   const sorted = useMemo(() => {
     const copy = [...filtered];
 
-    const getPrice = (str: string) => parseInt(str.replace(/[^0-9]/g, ""), 10);
-
     if (sort === "price-asc") {
-      return copy.sort((a, b) => getPrice(a.price) - getPrice(b.price));
+      return copy.sort((a, b) => a.min_price - b.min_price);
     }
     if (sort === "price-desc") {
-      return copy.sort((a, b) => getPrice(b.price) - getPrice(a.price));
+      return copy.sort((a, b) => b.min_price - a.min_price);
     }
     if (sort === "rating") {
-      return copy.sort((a, b) => b.rating - a.rating);
+      return copy.sort((a, b) => b.stars - a.stars);
     }
     return copy;
   }, [sort, filtered]);
-
-  const totalPages = Math.ceil(sorted.length / perPage);
-  const pageData = sorted.slice((page - 1) * perPage, page * perPage);
-
-  // function toggleFav(id: number) {
-  //   setFavorites((prev) => {
-  //     const next = new Set(prev);
-  //     if (next.has(id)) {
-  //       next.delete(id);
-  //     } else {
-  //       next.add(id);
-  //     }
-  //     return next;
-  //   });
-  // }
 
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-4">
@@ -112,9 +99,7 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
       <div className="w-full space-y-4">
         <h2 className="text-2xl font-semibold text-gray-900">
           {searchQuery
-            ? `${t("search.results_for")} "${searchQuery}" (${
-                filtered.length
-              } ${t("search.found")})`
+            ? `${t("search.results_for")} "${searchQuery}" (${totalResults} ${t("search.found")})`
             : t("index.explore_rooms_title")}
         </h2>
 
@@ -123,7 +108,7 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
           <div className="flex items-center border justify-between p-2 py-1 rounded-full">
             <div
               onClick={() => setLayout("list")}
-              className={`p-1 rounded-full 
+              className={`p-1 rounded-full
                 ${layout == "list" ? "text-primary border-primary border" : ""}
                 `}
             >
@@ -131,7 +116,7 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
             </div>
             <div
               onClick={() => setLayout("grid")}
-              className={`p-1 rounded-full 
+              className={`p-1 rounded-full
                 ${layout != "list" ? "text-primary border-primary border" : ""}
                 `}
             >
@@ -141,8 +126,22 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
         </div>
       </div>
 
-      {/* Grid 2 columns */}
-      {pageData.length === 0 ? (
+      {/* Grid */}
+      {isLoading ? (
+        <section
+          className={`grid gap-6 ${layout !== "list" ? "grid-cols-1 md:grid-cols-2" : ""}`}
+        >
+          {Array.from({ length: perPage }).map((_, i) => (
+            <RoomCardSkeleton key={i} />
+          ))}
+        </section>
+      ) : isError ? (
+        <div className="text-center py-12">
+          <p className="text-red-500 text-lg">
+            Failed to load rooms. Please try again.
+          </p>
+        </div>
+      ) : sorted.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">{t("search.no_results")}</p>
           {searchQuery && (
@@ -157,49 +156,49 @@ export default function PlacesList({ searchQuery = "" }: PlacesListProps) {
         ${layout != "list" ? "grid-cols-1 md:grid-cols-2" : ""}
         `}
         >
-          {pageData.map((place) => (
-            <RoomCard
-              key={place.id}
-              place={place}
-              // isFav={favorites.has(place.id)}
-              // onToggleFav={toggleFav}
-            />
+          {sorted.map((room: Room) => (
+            <RoomCard key={room.id} room={room} locale={locale} />
           ))}
         </section>
       )}
 
       {/* Pagination */}
-      <div className="flex items-center justify-center mt-8">
-        <nav className="inline-flex items-center gap-2" aria-label="Pagination">
-          <button
-            onClick={() => setPage((v) => Math.max(1, v - 1))}
-            disabled={page === 1}
-            className="px-3 py-1 border rounded-md disabled:opacity-50"
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center mt-8">
+          <nav
+            className="inline-flex items-center gap-2"
+            aria-label="Pagination"
           >
-            ‹
-          </button>
-
-          {Array.from({ length: totalPages }).map((_, i) => (
             <button
-              key={i}
-              onClick={() => setPage(i + 1)}
-              className={`px-3 py-1 border rounded-md ${
-                page === i + 1 ? "bg-emerald-50 border-emerald-400" : ""
-              }`}
+              onClick={() => setPage((v) => Math.max(1, v - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 border rounded-md disabled:opacity-50"
             >
-              {i + 1}
+              ‹
             </button>
-          ))}
 
-          <button
-            onClick={() => setPage((v) => Math.min(totalPages, v + 1))}
-            disabled={page === totalPages}
-            className="px-3 py-1 border rounded-md disabled:opacity-50"
-          >
-            ›
-          </button>
-        </nav>
-      </div>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i + 1)}
+                className={`px-3 py-1 border rounded-md ${
+                  page === i + 1 ? "bg-emerald-50 border-emerald-400" : ""
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={() => setPage((v) => Math.min(totalPages, v + 1))}
+              disabled={page === totalPages}
+              className="px-3 py-1 border rounded-md disabled:opacity-50"
+            >
+              ›
+            </button>
+          </nav>
+        </div>
+      )}
     </section>
   );
 }
