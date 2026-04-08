@@ -7,14 +7,14 @@ import { motion } from "motion/react";
 import { Link } from "@/i18n/routing";
 import { useNazels } from "@/components/nazels/hooks/useNazels";
 import type { Nazel } from "@/components/nazels/types";
-import { Building } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 const NazelCard = ({ nazel, locale }: { nazel: Nazel; locale: string }) => {
   const name = locale === "ar" ? nazel.name_ar : nazel.name_en;
 
   return (
     <div className="flex items-center rtl:space-x-reverse">
-      <Building className="me-2" />
+      <Building2 className="me-2" />
       <div className="flex flex-col">
         <h3 className="text-lg font-semibold text-[#1f3731]">{name}</h3>
       </div>

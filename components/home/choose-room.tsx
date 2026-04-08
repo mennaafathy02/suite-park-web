@@ -44,7 +44,7 @@ export default function ChooseRoom() {
       </motion.div>
 
       <motion.div
-        className="grid gap-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2"
+        className="grid gap-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}

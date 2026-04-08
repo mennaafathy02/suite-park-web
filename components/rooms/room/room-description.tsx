@@ -1,9 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Button } from "@/components/ui/button";
 import {
   Cigarette,
-  Hotel,
   LucideIcon,
   CalendarCheck,
   CalendarX,
@@ -12,6 +12,7 @@ import {
   Baby,
   Moon,
   PawPrint,
+  CircleCheckBig,
 } from "lucide-react";
 import {
   Dialog,
@@ -42,7 +43,7 @@ const AmenityItem = ({
           className="w-5 h-5 object-contain"
         />
       ) : (
-        <Hotel className="w-5 h-5 text-gray-500" />
+        <CircleCheckBig className="w-5 h-5 text-gray-500" />
       )}
       <span className="text-base">{label}</span>
     </div>

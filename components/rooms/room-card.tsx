@@ -11,14 +11,13 @@ interface RoomCardProps {
 export default function RoomCard({ room, locale }: RoomCardProps) {
   const name = locale === "ar" ? room.name_ar : room.name_en;
   const location = locale === "ar" ? room.location_ar : room.location_en;
-  const typeName =
-    locale === "ar" ? room.type_name_ar : room.type_name_en;
+
   const wehda = locale === "ar" ? room.wehda_name_ar : room.wehda_name_en;
   const imageSrc = room.thumbnails?.[0]?.path
     ? getImageUrl(room.thumbnails[0].path)
-    : "/imgs/room.jpg";
+    : null;
 
-  const tags = [typeName, wehda].filter(Boolean);
+  const tags = [wehda].filter(Boolean);
   const amenities = room.amenities?.slice(0, 3) ?? [];
 
   return (
@@ -27,14 +26,18 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
       className="flex gap-4 p-4 bg-white border rounded-md shadow-sm hover:shadow-md transition-shadow"
     >
       {/* image */}
-      <div className="w-40 shrink-0 rounded-md overflow-hidden relative">
-        <Image
-          width={1000}
-          height={1000}
-          src={imageSrc}
-          alt={name || "Room"}
-          className="w-full h-full object-cover"
-        />
+      <div className="md:w-56 w-36 shrink-0 rounded-md overflow-hidden relative">
+        {imageSrc ? (
+          <Image
+            width={1000}
+            height={1000}
+            src={imageSrc}
+            alt={name || "Room"}
+            className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 object-cover"
+          />
+        ) : (
+          <div className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 bg-gray-200 flex items-center justify-center"></div>
+        )}
       </div>
 
       {/* content */}
@@ -47,7 +50,8 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
 
           <div className="flex flex-col items-end gap-2">
             <div className="text-sm text-gray-700 font-medium">
-              {room.price?.toLocaleString()} SAR
+              {room.min_price?.toLocaleString()} -{" "}
+              {room.max_price?.toLocaleString()} SAR
             </div>
           </div>
         </div>
@@ -63,7 +67,7 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
 
         {/* amenities & rating */}
         <div className="mt-auto flex flex-wrap items-center justify-between text-sm text-gray-500">
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-wrap gap-2 items-center">
             {amenities.map((a) => (
               <span
                 key={a.id}

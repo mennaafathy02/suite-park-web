@@ -45,7 +45,8 @@ export interface Room {
   location_en: string;
   description_ar: string;
   description_en: string;
-  price: number;
+  min_price: number;
+  max_price: number;
   type_id: number;
   type_name_ar: string;
   type_name_en: string;
