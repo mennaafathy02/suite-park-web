@@ -119,10 +119,10 @@ export default function PlacesList({
     const copy = [...filtered];
 
     if (sort === "price-asc") {
-      return copy.sort((a, b) => a.price - b.price);
+      return copy.sort((a, b) => a.min_price - b.min_price);
     }
     if (sort === "price-desc") {
-      return copy.sort((a, b) => b.price - a.price);
+      return copy.sort((a, b) => b.min_price - a.min_price);
     }
     if (sort === "rating") {
       return copy.sort((a, b) => b.stars - a.stars);
