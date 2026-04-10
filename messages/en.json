@@ -55,7 +55,13 @@
     "last_name": "Last Name",
     "social_share": "Social Share",
     "sort_by": "Sort by",
-    "show_rooms": "Show Rooms"
+    "show_rooms": "Show Rooms",
+    "full_name": "Full Name",
+    "message": "Message",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "no_data": "No data available.",
+    "send_message": "Send Message"
   },
   "search": {
     "results_for": "Search Results for",

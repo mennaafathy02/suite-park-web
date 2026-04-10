@@ -13,19 +13,28 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { motion } from "motion/react";
+import { useContactUs } from "./hook/useContactUs";
 
-// // Data for social links (using simple SVG icons or linking to an icon library)
-// const socialLinks = [
-//   { icon: "fa-facebook-f", url: "#" },
-//   { icon: "fa-instagram", url: "#" },
-//   { icon: "fa-twitter", url: "#" },
-//   { icon: "fa-linkedin-in", url: "#" },
-//   { icon: "fa-youtube", url: "#" },
-// ];
+import { z } from "zod";
+
+export const contactSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  subject: z.string().min(1, "Subject is required"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+  type: z.string(),
+});
+
+export type ContactFormValues = z.input<typeof contactSchema>;
 
 const NewsletterFooter = () => {
-  // Custom colors matching your theme
   const t = useTranslations();
+  const { form, onSubmit, isLoading } = useContactUs();
+  const {
+    register,
+    formState: { errors },
+  } = form;
+  // Custom colors matching your theme
   return (
     <section className="container mx-auto md:py-10 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
@@ -41,7 +50,12 @@ const NewsletterFooter = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 200 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2,
+              type: "spring",
+              stiffness: 200,
+            }}
             viewport={{ once: true }}
           >
             <Image
@@ -121,61 +135,64 @@ const NewsletterFooter = () => {
         </motion.div>
 
         {/* --- Right Column: Newsletter Form --- */}
-        <motion.div
-          className="flex flex-col"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <motion.h2
-            className="text-3xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            viewport={{ once: true }}
-          >
-            {t("index.newsletter_title")}
-          </motion.h2>
-          <motion.p
-            className="text-gray-600 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            viewport={{ once: true }}
-          >
-            {t("index.join_newsletter")}
-          </motion.p>
+        <motion.div className="flex flex-col">
+          <form onSubmit={onSubmit} className="space-y-4">
+            {/* Name Field */}
+            <div className="space-y-1">
+              <input
+                {...register("name")}
+                placeholder={t("global.full_name")}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-green-500 outline-none"
+              />
+              {errors.name && (
+                <p className="text-xs text-red-500">{errors.name.message}</p>
+              )}
+            </div>
 
-          <form className="space-y-4">
-            {/* Input: First Name */}
-            <input
-              type="text"
-              placeholder={t("global.first_name")}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500"
-              required
-            />
-            {/* Input: Last Name */}
-            <input
-              type="text"
-              placeholder={t("global.last_name")}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500"
-              required
-            />
-            {/* Input: Email Address */}
-            <input
-              type="email"
-              placeholder={t("global.email")}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-green-500"
-              required
-            />
+            {/* Email Field */}
+            <div className="space-y-1">
+              <input
+                {...register("email")}
+                type="email"
+                placeholder={t("global.email")}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-green-500 outline-none"
+              />
+              {errors.email && (
+                <p className="text-xs text-red-500">{errors.email.message}</p>
+              )}
+            </div>
 
-            {/* Submit Button */}
+            {/* Subject Field */}
+            <div className="space-y-1">
+              <input
+                {...register("subject")}
+                placeholder={t("global.subject")}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-green-500 outline-none"
+              />
+              {errors.subject && (
+                <p className="text-xs text-red-500">{errors.subject.message}</p>
+              )}
+            </div>
+
+            {/* Message Field */}
+            <div className="space-y-1">
+              <textarea
+                {...register("message")}
+                placeholder={t("global.message")}
+                rows={4}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-1 focus:ring-green-500 outline-none resize-none"
+              />
+              {errors.message && (
+                <p className="text-xs text-red-500">{errors.message.message}</p>
+              )}
+            </div>
+
             <Button
               type="submit"
-              className="w-full inline-flex rounded-none bg-primary-foreground items-center justify-center mt-6 px-6 py-3 text-gray-700 h-auto  shadow-none transition-colors duration-300"
+              disabled={isLoading}
+              className="w-full rounded-none bg-primary-foreground py-6 text-gray-700 transition-all active:scale-95"
             >
-              {t("index.newsletter_subscription")}
+              {isLoading ? "Sending..." : t("global.send_message")}
               <ArrowRight className="w-5 h-5 ms-2 rtl:rotate-180" />
             </Button>
           </form>
