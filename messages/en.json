@@ -59,6 +59,7 @@
     "full_name": "Full Name",
     "message": "Message",
     "submit": "Submit",
+    "subject": "Subject",
     "loading": "Loading...",
     "no_data": "No data available.",
     "send_message": "Send Message"
