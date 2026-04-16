@@ -1,7 +1,12 @@
 "use client";
 
-import { Heart, Images, Share2, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {
+  //  Heart,
+  Images,
+  //  Share2,
+  Star,
+} from "lucide-react";
+// import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
   Dialog,
@@ -32,7 +37,8 @@ export default function RoomInfo() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const roomName = locale === "ar" ? room?.name_ar : room?.name_en;
-  const roomLocation = locale === "ar" ? room?.location_ar : room?.location_en;
+  const roomLook = locale === "ar" ? room?.look_ar : room?.look_en;
+  const room_number = room?.type_id;
 
   // Use images from API or empty array
   const images = room?.images || [];
@@ -66,22 +72,31 @@ export default function RoomInfo() {
             )}
           </h1>
           <p className="text-base text-gray-500">
+            {t("index.room_number")}{" "}
             {isLoading ? (
               <div className="h-4 w-32 bg-gray-200 animate-pulse rounded mt-2" />
             ) : (
-              roomLocation
+              room_number
+            )}
+          </p>
+          <p className="text-base text-gray-500">
+            {t("index.look")}{" "}
+            {isLoading ? (
+              <div className="h-4 w-32 bg-gray-200 animate-pulse rounded mt-2" />
+            ) : (
+              roomLook
             )}
           </p>
         </div>
 
-        <div className="flex space-x-2">
+        {/* <div className="flex space-x-2">
           <Button variant="ghost" size="icon" className="hover:bg-gray-100">
             <Heart className="h-5 w-5 text-gray-700" />
           </Button>
           <Button variant="ghost" size="icon" className="hover:bg-gray-100">
             <Share2 className="h-5 w-5 text-gray-700" />
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* IMAGE GRID OR SKELETON */}

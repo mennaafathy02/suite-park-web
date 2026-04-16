@@ -21,10 +21,10 @@
     "aboutus_desc": "From local escapes to far-flung adventures, find what makes you happy anytime, anywhere",
     "who": "who",
     "we_are": "We Are",
-    "who_we_are_desc": "We're all about creating unforgettable experiences for our guests. Our journey began with a simple passion for exploring the beauty of the World.",
+    "who_we_are_desc": "Suite Park is your elegant escape in Jeddah’s Al-Shati District. With inviting rooms and suites, a friendly team available around the clock, and a prime location near the Corniche and city highlights, we make business trips and weekend breaks equally relaxing.",
     "our": "Our",
     "suite_park": "Suite Park",
-    "our_suite_park_desc": "We're all about creating unforgettable experiences for our guests. Our journey began with a simple passion for exploring the beauty of the World.",
+    "our_suite_park_desc": "Our mission is to create a calm, design-led stay in Jeddah’s Al-Shati, where guests are looked after from check-in to check-out. By combining friendly, proactive service with well-crafted spaces, we remove small travel frictions and elevate the moments that matter.",
     "what_we_serve": "What we offer",
     "what_we_serve_desc": "We offer our best services",
     "our_info": "Our info",
@@ -45,7 +45,9 @@
     "feature3_title": "Exclusive Services for Guest Convenience",
     "feature3_desc": "We believe your time is valuable, so we offer an exclusive and complimentary service for our valued guests; our team will handle and deliver your purchases from Shops and amenities are conveniently located right next to your suite. Relax and leave the simple daily tasks to us.",
     "feature4_title": "Move Smart & Easy",
-    "feature4_desc": "Our location is designed to provide you with maximum convenience; the hotel is situated opposite a fully integrated 'Naft' station, making it easy to refuel your vehicle and access quick services without any delays. Our location is not just a place to stay, but the perfect starting point for all your destinations in Jeddah."
+    "feature4_desc": "Our location is designed to provide you with maximum convenience; the hotel is situated opposite a fully integrated 'Naft' station, making it easy to refuel your vehicle and access quick services without any delays. Our location is not just a place to stay, but the perfect starting point for all your destinations in Jeddah.",
+    "look": "overlooking",
+    "room_number":"Room Number"
   },
   "global": {
     "search_here": "Search here",

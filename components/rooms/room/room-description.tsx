@@ -134,9 +134,7 @@ export default function RoomDescription() {
         <div className="lg:col-span-3">
           {/* DESCRIPTION SECTION */}
           <section className="mb-8">
-            <h2 className="text-2xl font-bold mb-3">
-              {t("room.description")}
-            </h2>
+            <h2 className="text-2xl font-bold mb-3">{t("room.description")}</h2>
             {isLoading ? (
               <div className="animate-pulse space-y-3">
                 <div className="h-4 w-full bg-gray-200 rounded" />
@@ -148,12 +146,11 @@ export default function RoomDescription() {
               <>
                 {room?.area && (
                   <p className="font-semibold text-gray-800 mb-2">
-                    {t("room.area_label")}: {room.area}
+                    {t("room.area_label")}: {room.area}{" "}
+                    {locale === "ar" ? "م²" : "m²"}
                   </p>
                 )}
-                <p className="text-gray-700 mb-4 line-clamp-4">
-                  {description}
-                </p>
+                <p className="text-gray-700 mb-4 line-clamp-4">{description}</p>
                 {description && description.length > 200 && (
                   <Dialog
                     open={descriptionOpen}
@@ -185,9 +182,7 @@ export default function RoomDescription() {
 
           {/* AMENITIES SECTION */}
           <section>
-            <h2 className="text-2xl font-bold mb-4">
-              {t("room.amenities")}
-            </h2>
+            <h2 className="text-2xl font-bold mb-4">{t("room.amenities")}</h2>
             {isLoading ? (
               <div className="animate-pulse grid grid-cols-2 sm:grid-cols-3 gap-y-4">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -210,10 +205,7 @@ export default function RoomDescription() {
                 </div>
 
                 {roomAmenities.length > 5 && (
-                  <Dialog
-                    open={amenitiesOpen}
-                    onOpenChange={setAmenitiesOpen}
-                  >
+                  <Dialog open={amenitiesOpen} onOpenChange={setAmenitiesOpen}>
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
