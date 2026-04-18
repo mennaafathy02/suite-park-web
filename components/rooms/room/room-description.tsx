@@ -3,16 +3,17 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Cigarette,
+  // Cigarette,
   LucideIcon,
   CalendarCheck,
   CalendarX,
   FileText,
   Users,
   Baby,
-  Moon,
+  // Moon,
   PawPrint,
   CircleCheckBig,
+  Beer,
 } from "lucide-react";
 import {
   Dialog,
@@ -111,15 +112,15 @@ export default function RoomDescription() {
       title: t("room.policies_list.age_restriction_title"),
       details: t("room.policies_list.age_restriction_details"),
     },
+    // {
+    //   icon: Moon,
+    //   title: t("room.policies_list.quiet_hours_title"),
+    //   details: t("room.policies_list.quiet_hours_details"),
+    // },
     {
-      icon: Moon,
-      title: t("room.policies_list.quiet_hours_title"),
-      details: t("room.policies_list.quiet_hours_details"),
-    },
-    {
-      icon: Cigarette,
-      title: t("room.policies_list.smoking_title"),
-      details: t("room.policies_list.smoking_details"),
+      icon: Beer,
+      title: t("room.policies_list.parties_title"),
+      details: t("room.policies_list.parties_details"),
     },
     {
       icon: PawPrint,

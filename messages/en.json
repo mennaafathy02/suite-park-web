@@ -47,7 +47,7 @@
     "feature4_title": "Move Smart & Easy",
     "feature4_desc": "Our location is designed to provide you with maximum convenience; the hotel is situated opposite a fully integrated 'Naft' station, making it easy to refuel your vehicle and access quick services without any delays. Our location is not just a place to stay, but the perfect starting point for all your destinations in Jeddah.",
     "look": "overlooking",
-    "room_number":"Room Number"
+    "room_number": "Room Number"
   },
   "global": {
     "search_here": "Search here",
@@ -106,11 +106,11 @@
     "image_gallery": "Image Gallery",
     "policies_list": {
       "check_in_title": "Check-in",
-      "check_in_details": "From 15:00 to 18:00\nYou'll need to let the property know in advance what time you'll arrive.",
+      "check_in_details": "From 2:00 PM to 6:00 PM",
       "check_out_title": "Check-out",
       "check_out_details": "From 8:00 to 11:00",
       "cancellation_title": "Cancellation/prepayment",
-      "cancellation_details": "Cancellation and prepayment policies vary according to accommodation type. Please check what condition may apply to each option when making your selection.",
+      "cancellation_details": "Cancellation and prepayment policies vary according to accommodation type.",
       "children_beds_title": "Children and beds",
       "children_beds_details": "Child policies: children of any age are welcome. To see correct prices and occupancy information, please add the number of children in your group and their ages to your search. Cot and extra bed policies: Cots and extra beds are not available at this property.",
       "age_restriction_title": "No age restriction",
@@ -120,7 +120,9 @@
       "smoking_title": "Smoking",
       "smoking_details": "Smoking not allowed.",
       "pets_title": "Pets",
-      "pets_details": "Pets are not allowed."
+      "pets_details": "Pets are not allowed.",
+      "parties_title":"Parties",
+      "parties_details":"Parties are not allowed"
     }
   },
   "nazels": {
