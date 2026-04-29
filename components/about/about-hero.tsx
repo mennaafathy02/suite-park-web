@@ -3,9 +3,15 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useImagesByType } from "@/components/content/hooks";
 
 export default function AboutHero() {
   const t = useTranslations();
+  const { data: coverImages = [] } = useImagesByType("aboutus-cover");
+  const coverImage = coverImages[0];
+
+  if (!coverImage) return null;
+
   return (
     <>
       <section className="flex relative justify-center items-center container mx-auto md:pb-10 pb-6 min-h-96 overflow-hidden">
@@ -39,18 +45,18 @@ export default function AboutHero() {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <Image
-            src={"/imgs/bg-hero.jpg"}
-            alt=""
+            src={coverImage.path}
+            alt={coverImage.name}
             width={1000}
             height={1000}
             className="h-full w-full object-cover"
           />
-          <motion.div
+          {/* <motion.div
             className="container z-10 mx-auto bg-[#022C223D] xl overflow-hidden absolute top-0 start-0 h-full w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.3 }}
-          ></motion.div>
+          ></motion.div> */}
         </motion.div>
       </section>
     </>

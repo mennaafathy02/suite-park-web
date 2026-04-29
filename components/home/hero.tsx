@@ -10,17 +10,13 @@ import {
 // import { Link } from "@/navigation";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useImagesByType } from "@/components/content/hooks";
 
 export default function Hero() {
-  const images = [
-    "/imgs/hero/home-slider-1.webp",
-    "/imgs/hero/home-slider-4.jpg",
-    "/imgs/hero/home-slider-15.jpg",
-    "/imgs/hero/home-slider-14.jpg",
-    "/imgs/hero/home-slider-6.jpg",
-    "/imgs/hero/home-slider-9.jpg",
-    "/imgs/hero/home-slider-18.jpg",
-  ];
+  const { data: images = [] } = useImagesByType("home");
+
+  if (images.length === 0) return null;
+
   return (
     <section className="flex justify-center items-center container mx-auto md:pb-10 pb-6">
       <motion.div
@@ -31,13 +27,13 @@ export default function Hero() {
       >
         <Carousel dir={"ltr"} className="w-full">
           <CarouselContent>
-            {images.map((src, index) => (
-              <CarouselItem key={index}>
+            {images.map((image) => (
+              <CarouselItem key={image.id}>
                 <div className="p-1">
                   <div>
                     <Image
-                      src={src}
-                      alt="slider"
+                      src={image.path}
+                      alt={image.name}
                       width={1000}
                       height={1000}
                       className="w-full h-[80vh] aspect-video object-cover object-bottom rounded-xl"

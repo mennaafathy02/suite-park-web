@@ -3,9 +3,13 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { useImagesByType } from "@/components/content/hooks";
 
 export default function AboutInfo() {
   const t = useTranslations();
+  const { data: visionImages = [] } = useImagesByType("aboutus-vision");
+  const visionImage = visionImages[0];
+
   return (
     <section className="flex gap-6 flex-wrap relative justify-between items-center container mx-auto md:py-10 py-6">
       <div className="space-y-8 max-w-2xl">
@@ -82,22 +86,24 @@ export default function AboutInfo() {
         </motion.div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.05 }}
-        className="transition-transform duration-300"
-      >
-        <Image
-          src={"/imgs/about-img.png"}
-          alt=""
-          width={1000}
-          height={1000}
-          className="max-w-xl"
-        />
-      </motion.div>
+      {visionImage && (
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+          whileHover={{ scale: 1.05 }}
+          className="transition-transform duration-300"
+        >
+          <Image
+            src={visionImage.path}
+            alt={visionImage.name}
+            width={1000}
+            height={1000}
+            className="max-w-xl"
+          />
+        </motion.div>
+      )}
     </section>
   );
 }

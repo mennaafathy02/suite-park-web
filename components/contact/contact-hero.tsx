@@ -39,12 +39,12 @@ export default function ContactHero() {
             height={1000}
             className="h-full w-full object-cover"
           />
-          <motion.div
+          {/* <motion.div
             className="container z-10 mx-auto bg-[#022C223D] xl overflow-hidden absolute top-0 start-0 h-full w-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.3 }}
-          ></motion.div>
+          ></motion.div> */}
         </motion.div>
       </section>
 

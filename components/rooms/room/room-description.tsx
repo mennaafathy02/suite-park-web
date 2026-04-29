@@ -3,17 +3,9 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  // Cigarette,
   LucideIcon,
-  CalendarCheck,
-  CalendarX,
   FileText,
-  Users,
-  Baby,
-  // Moon,
-  PawPrint,
   CircleCheckBig,
-  Beer,
 } from "lucide-react";
 import {
   Dialog,
@@ -27,6 +19,8 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useRoomById } from "../hooks/useRoomById";
 import { getImageUrl } from "@/lib/image";
+import { usePolicy } from "@/components/content/hooks";
+import type { LocalizedText } from "@/components/content/types";
 
 const AmenityItem = ({
   label,
@@ -74,60 +68,80 @@ const PolicyRow = ({
   </div>
 );
 
+function getLocalizedText(entry: LocalizedText, locale: string) {
+  const primary = locale === "ar" ? entry.ar : entry.en;
+  const fallback = locale === "ar" ? entry.en : entry.ar;
+  return primary?.trim() || fallback?.trim() || "";
+}
+
+function formatPolicyTitle(key: string) {
+  return key
+    .replace(/[_-]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 export default function RoomDescription() {
   const t = useTranslations();
   const locale = useLocale();
   const { id } = useParams<{ id: string }>();
   const { data: room, isLoading } = useRoomById(id);
+  const { data: policyResponse } = usePolicy();
   const [descriptionOpen, setDescriptionOpen] = useState(false);
   const [amenitiesOpen, setAmenitiesOpen] = useState(false);
 
   const description =
     locale === "ar" ? room?.description_ar : room?.description_en;
   const roomAmenities = room?.amenities ?? [];
-
-  const policiesData = [
-    {
-      icon: CalendarCheck,
-      title: t("room.policies_list.check_in_title"),
-      details: t("room.policies_list.check_in_details"),
-    },
-    {
-      icon: CalendarX,
-      title: t("room.policies_list.check_out_title"),
-      details: t("room.policies_list.check_out_details"),
-    },
-    {
+  const policyContent = policyResponse?.data?.[0]?.content?.policy ?? {};
+  const policiesData = Object.entries(policyContent)
+    .map(([key, entry]) => ({
       icon: FileText,
-      title: t("room.policies_list.cancellation_title"),
-      details: t("room.policies_list.cancellation_details"),
-    },
-    {
-      icon: Users,
-      title: t("room.policies_list.children_beds_title"),
-      details: t("room.policies_list.children_beds_details"),
-    },
-    {
-      icon: Baby,
-      title: t("room.policies_list.age_restriction_title"),
-      details: t("room.policies_list.age_restriction_details"),
-    },
-    // {
-    //   icon: Moon,
-    //   title: t("room.policies_list.quiet_hours_title"),
-    //   details: t("room.policies_list.quiet_hours_details"),
-    // },
-    {
-      icon: Beer,
-      title: t("room.policies_list.parties_title"),
-      details: t("room.policies_list.parties_details"),
-    },
-    {
-      icon: PawPrint,
-      title: t("room.policies_list.pets_title"),
-      details: t("room.policies_list.pets_details"),
-    },
-  ];
+      title: formatPolicyTitle(key),
+      details: getLocalizedText(entry, locale),
+    }))
+    .filter((policy) => policy.details.length > 0);
+
+  /*
+   * Static policy rows kept for possible future reuse.
+   *
+   * const policiesData = [
+   *   {
+   *     icon: CalendarCheck,
+   *     title: t("room.policies_list.check_in_title"),
+   *     details: t("room.policies_list.check_in_details"),
+   *   },
+   *   {
+   *     icon: CalendarX,
+   *     title: t("room.policies_list.check_out_title"),
+   *     details: t("room.policies_list.check_out_details"),
+   *   },
+   *   {
+   *     icon: FileText,
+   *     title: t("room.policies_list.cancellation_title"),
+   *     details: t("room.policies_list.cancellation_details"),
+   *   },
+   *   {
+   *     icon: Users,
+   *     title: t("room.policies_list.children_beds_title"),
+   *     details: t("room.policies_list.children_beds_details"),
+   *   },
+   *   {
+   *     icon: Baby,
+   *     title: t("room.policies_list.age_restriction_title"),
+   *     details: t("room.policies_list.age_restriction_details"),
+   *   },
+   *   {
+   *     icon: Beer,
+   *     title: t("room.policies_list.parties_title"),
+   *     details: t("room.policies_list.parties_details"),
+   *   },
+   *   {
+   *     icon: PawPrint,
+   *     title: t("room.policies_list.pets_title"),
+   *     details: t("room.policies_list.pets_details"),
+   *   },
+   * ];
+   */
 
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-6">
@@ -243,22 +257,23 @@ export default function RoomDescription() {
         </div>
       </div>
 
-      {/* POLICIES SECTION - Static */}
-      <div>
-        <h2 className="text-2xl font-bold mb-1">{t("room.policies")}</h2>
-        <p className="text-sm mb-6">{t("room.policies_subtitle")}</p>
+      {policiesData.length > 0 && (
+        <div>
+          <h2 className="text-2xl font-bold mb-1">{t("room.policies")}</h2>
+          <p className="text-sm mb-6">{t("room.policies_subtitle")}</p>
 
-        <div className="p-4 border rounded-xl shadow-sm bg-white">
-          {policiesData.map((policy, index) => (
-            <PolicyRow
-              key={index}
-              icon={policy.icon}
-              title={policy.title}
-              details={policy.details}
-            />
-          ))}
+          <div className="p-4 border rounded-xl shadow-sm bg-white">
+            {policiesData.map((policy) => (
+              <PolicyRow
+                key={policy.title}
+                icon={policy.icon}
+                title={policy.title}
+                details={policy.details}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
