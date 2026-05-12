@@ -33,10 +33,10 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
             height={1000}
             src={imageSrc}
             alt={name || "Room"}
-            className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 object-cover"
+            className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 object-cover h-full"
           />
         ) : (
-          <div className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 bg-gray-200 flex items-center justify-center"></div>
+          <div className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 h-full bg-gray-200 flex items-center justify-center"></div>
         )}
       </div>
 

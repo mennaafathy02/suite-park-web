@@ -18,8 +18,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  // CarouselNext,
+  // CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
@@ -156,19 +156,19 @@ export default function RoomInfo() {
       {/* Image Gallery Dialog */}
       {images.length > 0 && (
         <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
-          <DialogContent dir={dir} className="max-w-5xl max-h-[90vh]  pb-4">
-            <DialogHeader className="p-8 pb-0 hidden">
+          <DialogContent dir={dir} className="max-w-screen max-h-screen p-0">
+            <DialogHeader className="  hidden">
               <DialogTitle className="rtl:text-start">
                 {t("room.image_gallery")}
               </DialogTitle>
             </DialogHeader>
-            <div className="p-6 pt-4 w-full h-full">
+            <div className="p w-full h-full">
               <Carousel
                 opts={{ startIndex: currentImageIndex, loop: true }}
                 className="w-full"
-                dir={dir}
+                dir={"ltr"}
               >
-                <CarouselContent>
+                <CarouselContent className="w-full">
                   {images.map((image, index) => (
                     <CarouselItem key={image.id} className="">
                       <div className="relative aspect-video w-full overflow-hidden rounded-lg">
@@ -176,6 +176,7 @@ export default function RoomInfo() {
                           src={getImageUrl(image.path)}
                           alt={image.name}
                           fill
+                          quality={100}
                           className="object-contain"
                         />
                       </div>
@@ -185,8 +186,8 @@ export default function RoomInfo() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="ltr:end-4 rtl:start-4 rtl:rotate-180" />
-                <CarouselNext className="ltr:start-4 rtl:end-4 rtl:rotate-180" />
+                {/* <CarouselPrevious className=" start-4 rtl:rotate-180" />
+                <CarouselNext className=" end-4 rtl:rotate-180" /> */}
               </Carousel>
             </div>
           </DialogContent>
