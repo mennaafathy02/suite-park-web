@@ -100,48 +100,7 @@ export default function RoomDescription() {
     .filter(
       (policy) => policy.title.length > 0 || policy.description.length > 0
     );
-
-  /*
-   * Static policy rows kept for possible future reuse.
-   *
-   * const policiesData = [
-   *   {
-   *     icon: CalendarCheck,
-   *     title: t("room.policies_list.check_in_title"),
-   *     description: t("room.policies_list.check_in_description"),
-   *   },
-   *   {
-   *     icon: CalendarX,
-   *     title: t("room.policies_list.check_out_title"),
-   *     description: t("room.policies_list.check_out_description"),
-   *   },
-   *   {
-   *     icon: FileText,
-   *     title: t("room.policies_list.cancellation_title"),
-   *     description: t("room.policies_list.cancellation_description"),
-   *   },
-   *   {
-   *     icon: Users,
-   *     title: t("room.policies_list.children_beds_title"),
-   *     description: t("room.policies_list.children_beds_description"),
-   *   },
-   *   {
-   *     icon: Baby,
-   *     title: t("room.policies_list.age_restriction_title"),
-   *     description: t("room.policies_list.age_restriction_description"),
-   *   },
-   *   {
-   *     icon: Beer,
-   *     title: t("room.policies_list.parties_title"),
-   *     description: t("room.policies_list.parties_description"),
-   *   },
-   *   {
-   *     icon: PawPrint,
-   *     title: t("room.policies_list.pets_title"),
-   *     description: t("room.policies_list.pets_description"),
-   *   },
-   * ];
-   */
+ 
 
   return (
     <section className="container mx-auto md:py-10 py-6 space-y-6">

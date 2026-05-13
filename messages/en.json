@@ -64,7 +64,9 @@
     "subject": "Subject",
     "loading": "Loading...",
     "no_data": "No data available.",
-    "send_message": "Send Message"
+    "send_message": "Send Message",
+    "country": "Country",
+    "select_country": "Select country"
   },
   "search": {
     "results_for": "Search Results for",

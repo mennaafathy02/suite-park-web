@@ -18,6 +18,7 @@ import { Link } from "@/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "@/i18n/routing";
 import { FormEvent, useState } from "react";
+import CountryCurrencySelector from "./country-currency-selector";
 
 export default function Header() {
   const t = useTranslations();
@@ -47,7 +48,7 @@ export default function Header() {
               <span className="hidden sm:block">yourinfo@yourmail.com </span>
             </div> */}
           </div>
-          <ul className="flex md:gap-6 gap-2 items-center">
+          <ul className="flex lg:gap-6 gap-2 items-center">
             <li>
               <Link
                 href={
@@ -66,14 +67,14 @@ export default function Header() {
                     d="M16.708.027C18.453 0 20.188.016 21.921 0c.105 2.041.839 4.12 2.333 5.563c1.491 1.479 3.6 2.156 5.652 2.385v5.369c-1.923-.063-3.855-.463-5.6-1.291c-.76-.344-1.468-.787-2.161-1.24c-.009 3.896.016 7.787-.025 11.667c-.104 1.864-.719 3.719-1.803 5.255c-1.744 2.557-4.771 4.224-7.88 4.276c-1.907.109-3.812-.411-5.437-1.369C4.307 29.027 2.412 26.12 2.136 23a22.3 22.3 0 0 1-.016-1.984c.24-2.537 1.495-4.964 3.443-6.615c2.208-1.923 5.301-2.839 8.197-2.297c.027 1.975-.052 3.948-.052 5.923c-1.323-.428-2.869-.308-4.025.495a4.618 4.618 0 0 0-1.819 2.333c-.276.676-.197 1.427-.181 2.145c.317 2.188 2.421 4.027 4.667 3.828c1.489-.016 2.916-.88 3.692-2.145c.251-.443.532-.896.547-1.417c.131-2.385.079-4.76.095-7.145c.011-5.375-.016-10.735.025-16.093z"
                   ></path>
                 </svg>
-                {/* <TikTok className="fill-primary text-primary md:size-5 size-3" /> */}
+                {/* <TikTok className="fill-primary text-primary lg:size-5 size-3" /> */}
               </Link>
             </li>
             <li>
               <Link
                 href={"https://www.facebook.com/profile.php?id=61582851270548"}
               >
-                <Facebook className="fill-primary text-primary md:size-5 size-3" />
+                <Facebook className="fill-primary text-primary lg:size-5 size-3" />
               </Link>
             </li>
             <li>
@@ -82,7 +83,7 @@ export default function Header() {
                   "https://www.instagram.com/suite.park?igsh=MW03dDVuOHMzeWJxbA%3D%3D&utm_source=qr"
                 }
               >
-                <Instagram className="text-primary md:size-5 size-3" />
+                <Instagram className="text-primary lg:size-5 size-3" />
               </Link>
             </li>
             <li>
@@ -101,17 +102,17 @@ export default function Header() {
                     d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584l-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
                   ></path>
                 </svg>
-                {/* <Twitter className="fill-primary text-primary md:size-5 size-3" /> */}
+                {/* <Twitter className="fill-primary text-primary lg:size-5 size-3" /> */}
               </Link>
             </li>
             {/* <li>
               <Link href={"https://facebook.com"}>
-                <Linkedin className="fill-primary text-primary md:size-5 size-3" />
+                <Linkedin className="fill-primary text-primary lg:size-5 size-3" />
               </Link>
             </li>
             <li>
               <Link href={"https://facebook.com"}>
-                <Youtube className="text-primary md:size-5 size-3" />
+                <Youtube className="text-primary lg:size-5 size-3" />
               </Link>
             </li> */}
           </ul>
@@ -124,10 +125,10 @@ export default function Header() {
             alt=""
             width={200}
             height={200}
-            className="md:w-40 w-20"
+            className="lg:w-40 w-20"
           />
         </Link>
-        <ul className="md:flex hidden items-center gap-4">
+        <ul className="lg:flex hidden items-center gap-4">
           <li>
             <Link href={"/"}>{t("index.home")}</Link>
           </li>
@@ -142,18 +143,22 @@ export default function Header() {
           </li>
         </ul>
 
+        <div className="hidden lg:block">
+          <CountryCurrencySelector />
+        </div>
+
         <form onSubmit={handleSearch} className="relative">
           <Search className="absolute start-2 size-4 top-[50%] -translate-y-[50%] pointer-events-none z-10" />
           <Input
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="rounded-full h-auto py-2 ps-8 bg-muted md:max-w-none max-w-40 md:text-sm text-xs"
+            className="rounded-full h-auto py-2 ps-8 bg-muted lg:max-w-none max-w-40 lg:text-sm text-xs"
             placeholder={t("global.search_here")}
           />
         </form>
         <Sheet>
-          <SheetTrigger className="md:hidden">
+          <SheetTrigger className="lg:hidden">
             <Menu className="size-5" />
           </SheetTrigger>
           <SheetContent className="p-6">
@@ -171,6 +176,7 @@ export default function Header() {
                 <Link href={"/contact-us"}>{t("index.contactus")}</Link>
               </li>
             </ul>
+            <CountryCurrencySelector className="mt-6" />
           </SheetContent>
         </Sheet>
       </div>

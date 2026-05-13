@@ -26,12 +26,14 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useRoomById } from "../hooks/useRoomById";
 import { getImageUrl } from "@/lib/image";
+import { useLocalizedCurrency } from "../hooks/useLocalizedCurrency";
 
 export default function RoomInfo() {
   const t = useTranslations();
   const locale = useLocale();
   const { id } = useParams<{ id: string }>();
   const { data: room, isLoading } = useRoomById(id);
+  const { formatPriceRange } = useLocalizedCurrency(locale);
 
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -71,6 +73,7 @@ export default function RoomInfo() {
               </span>
             )}
           </h1>
+
           <p className="text-base text-gray-500">
             {t("index.room_number")}{" "}
             {isLoading ? (
@@ -87,6 +90,9 @@ export default function RoomInfo() {
               roomLook
             )}
           </p>
+        </div>
+        <div>
+          {formatPriceRange(room?.min_price, room?.max_price)}
         </div>
 
         {/* <div className="flex space-x-2">

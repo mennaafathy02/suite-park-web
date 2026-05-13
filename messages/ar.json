@@ -64,7 +64,9 @@
     "subject": "الموضوع",
     "loading": "جار التحميل...",
     "no_data": "لا توجد بيانات لعرضها.",
-    "send_message": "إرسال رسالة"
+    "send_message": "إرسال رسالة",
+    "country": "الدولة",
+    "select_country": "اختر الدولة"
   },
   "search": {
     "results_for": "نتائج البحث عن",

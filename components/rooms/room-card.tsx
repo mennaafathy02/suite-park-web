@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Room } from "./types";
 import { getImageUrl } from "@/lib/image";
+import { useLocalizedCurrency } from "./hooks/useLocalizedCurrency";
 
 interface RoomCardProps {
   room: Room;
@@ -11,6 +14,7 @@ interface RoomCardProps {
 export default function RoomCard({ room, locale }: RoomCardProps) {
   const name = locale === "ar" ? room.name_ar : room.name_en;
   const location = locale === "ar" ? room.location_ar : room.location_en;
+  const { formatPriceRange } = useLocalizedCurrency(locale);
 
   const wehda = locale === "ar" ? room.wehda_name_ar : room.wehda_name_en;
   const imageSrc = room.thumbnails?.[0]?.path
@@ -50,8 +54,7 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
 
           <div className="flex flex-col items-end gap-2">
             <div className="text-sm text-gray-700 font-medium">
-              {room.min_price?.toLocaleString()} -{" "}
-              {room.max_price?.toLocaleString()} SAR
+              {formatPriceRange(room.min_price, room.max_price)}
             </div>
           </div>
         </div>
