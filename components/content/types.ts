@@ -3,19 +3,23 @@ export type LocalizedText = {
   ar?: string | null;
 };
 
-export type PolicyContent = Record<string, LocalizedText>;
+export type PolicyContent = {
+  title: LocalizedText;
+  description: LocalizedText;
+  icon: string | null;
+};
 
 export interface PolicyRecord {
   id: number;
   content?: {
-    policy?: PolicyContent | null;
+    policies?: PolicyContent[];
   } | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface PolicyResponse {
-  data: PolicyRecord[];
+  data: PolicyRecord;
 }
 
 export interface ApiImage {
