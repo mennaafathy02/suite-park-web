@@ -142,11 +142,6 @@ export default function Header() {
             <Link href={"/contact-us"}>{t("index.contactus")}</Link>
           </li>
         </ul>
-
-        <div className="hidden lg:block">
-          <CountryCurrencySelector />
-        </div>
-
         <form onSubmit={handleSearch} className="relative">
           <Search className="absolute start-2 size-4 top-[50%] -translate-y-[50%] pointer-events-none z-10" />
           <Input
@@ -157,6 +152,10 @@ export default function Header() {
             placeholder={t("global.search_here")}
           />
         </form>
+        <div className="hidden lg:block">
+          <CountryCurrencySelector />
+        </div>
+
         <Sheet>
           <SheetTrigger className="lg:hidden">
             <Menu className="size-5" />
