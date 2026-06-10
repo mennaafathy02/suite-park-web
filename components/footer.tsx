@@ -20,9 +20,23 @@ const footerLinks = [
   {
     title: "social_links",
     links: [
-      { name: "facebook", href: "#" },
-      { name: "instagram", href: "#" },
-      { name: "linkedin", href: "#" },
+      {
+        name: "facebook",
+        href: "https://www.facebook.com/profile.php?id=61582851270548",
+      },
+
+      {
+        name: "instagram",
+        href: "https://www.instagram.com/suite.park?igsh=MW03dDVuOHMzeWJxbA%3D%3D&utm_source=qr",
+      },
+      {
+        name: "x",
+        href: "https://x.com/SuitePark58907/status/2031894658368827776",
+      },
+      {
+        name: "tiktok",
+        href: "https://www.tiktok.com/@user1735614357213?_r=1&_t=ZS-95vHDrbuMfB",
+      },
       // { name: "Careers", href: "#" },
     ],
   },
