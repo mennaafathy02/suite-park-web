@@ -5,7 +5,20 @@ import { usePathname, useRouter } from "@/i18n/routing";
 import { Globe } from "lucide-react";
 import { useTransition } from "react";
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  variant?: "dark" | "light";
+  onLocaleChange?: () => void;
+}
+
+const inactiveButtonClasses = {
+  dark: "bg-gray-700 text-gray-300 hover:bg-gray-600",
+  light: "border border-gray-200 bg-muted text-gray-700 hover:border-primary",
+};
+
+export default function LanguageSwitcher({
+  variant = "dark",
+  onLocaleChange,
+}: LanguageSwitcherProps) {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -15,6 +28,7 @@ export default function LanguageSwitcher() {
     startTransition(() => {
       router.replace(pathname, { locale: newLocale });
     });
+    onLocaleChange?.();
   };
 
   return (
@@ -26,7 +40,7 @@ export default function LanguageSwitcher() {
           className={`px-3 py-1 text-sm rounded transition-colors ${
             locale === "en"
               ? "bg-primary text-white"
-              : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              : inactiveButtonClasses[variant]
           } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={isPending || locale === "en"}
         >
@@ -37,7 +51,7 @@ export default function LanguageSwitcher() {
           className={`px-3 py-1 text-sm rounded transition-colors ${
             locale === "ar"
               ? "bg-primary text-white"
-              : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              : inactiveButtonClasses[variant]
           } ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={isPending || locale === "ar"}
         >

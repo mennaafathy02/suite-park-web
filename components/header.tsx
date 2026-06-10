@@ -19,11 +19,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from "@/i18n/routing";
 import { FormEvent, useState } from "react";
 import CountryCurrencySelector from "./country-currency-selector";
+import LanguageSwitcher from "./language-switcher";
 
 export default function Header() {
   const t = useTranslations();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -152,29 +155,42 @@ export default function Header() {
             placeholder={t("global.search_here")}
           />
         </form>
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-4">
+          <LanguageSwitcher variant="light" />
           <CountryCurrencySelector />
         </div>
 
-        <Sheet>
+        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <SheetTrigger className="lg:hidden">
             <Menu className="size-5" />
           </SheetTrigger>
           <SheetContent className="p-6">
             <ul className="flex flex-col gap-4">
               <li>
-                <Link href={"/"}>{t("index.home")}</Link>
+                <Link href={"/"} onClick={closeMobileMenu}>
+                  {t("index.home")}
+                </Link>
               </li>
               <li>
-                <Link href={"/about-us"}>{t("index.aboutus")}</Link>
+                <Link href={"/about-us"} onClick={closeMobileMenu}>
+                  {t("index.aboutus")}
+                </Link>
               </li>
               <li>
-                <Link href={"/rooms"}>{t("index.rooms")}</Link>
+                <Link href={"/rooms"} onClick={closeMobileMenu}>
+                  {t("index.rooms")}
+                </Link>
               </li>
               <li>
-                <Link href={"/contact-us"}>{t("index.contactus")}</Link>
+                <Link href={"/contact-us"} onClick={closeMobileMenu}>
+                  {t("index.contactus")}
+                </Link>
               </li>
             </ul>
+            <LanguageSwitcher
+              variant="light"
+              onLocaleChange={closeMobileMenu}
+            />
             <CountryCurrencySelector className="mt-6" />
           </SheetContent>
         </Sheet>
