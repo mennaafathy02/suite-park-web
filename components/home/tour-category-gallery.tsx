@@ -68,13 +68,13 @@ const TourCard = ({
       />
 
       {/* Gradient Overlay */}
-      <div
+      {/* <div
         className="absolute inset-0 bg-linear-to-t from-gray-900/80 via-gray-900/10 to-transparent"
         style={{
           background:
             "linear-gradient(to top, rgba(31, 55, 49, 0.8), rgba(31, 55, 49, 0) 60%)",
         }}
-      ></div>
+      ></div> */}
 
       {/* Text Content */}
       <div className="absolute bottom-0 left-0 p-6">

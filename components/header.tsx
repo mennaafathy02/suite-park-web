@@ -11,7 +11,7 @@ import {
   // Twitter,
   // Youtube,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Link } from "@/navigation";
@@ -27,6 +27,8 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  const locale = useLocale();
+  const isRTL = ["ar"].includes(locale);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -164,34 +166,36 @@ export default function Header() {
           <SheetTrigger className="lg:hidden">
             <Menu className="size-5" />
           </SheetTrigger>
-          <SheetContent className="p-6">
-            <ul className="flex flex-col gap-4">
-              <li>
-                <Link href={"/"} onClick={closeMobileMenu}>
-                  {t("index.home")}
-                </Link>
-              </li>
-              <li>
-                <Link href={"/about-us"} onClick={closeMobileMenu}>
-                  {t("index.aboutus")}
-                </Link>
-              </li>
-              <li>
-                <Link href={"/rooms"} onClick={closeMobileMenu}>
-                  {t("index.rooms")}
-                </Link>
-              </li>
-              <li>
-                <Link href={"/contact-us"} onClick={closeMobileMenu}>
-                  {t("index.contactus")}
-                </Link>
-              </li>
-            </ul>
-            <LanguageSwitcher
-              variant="light"
-              onLocaleChange={closeMobileMenu}
-            />
-            <CountryCurrencySelector className="mt-6" />
+          <SheetContent className="p-6" dir="ltr">
+            <div dir={isRTL ? "rtl" : "ltr"} className="space-y-4">
+              <ul className="flex flex-col gap-4 pt-4 ">
+                <li>
+                  <Link href={"/"} onClick={closeMobileMenu}>
+                    {t("index.home")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/about-us"} onClick={closeMobileMenu}>
+                    {t("index.aboutus")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/rooms"} onClick={closeMobileMenu}>
+                    {t("index.rooms")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/contact-us"} onClick={closeMobileMenu}>
+                    {t("index.contactus")}
+                  </Link>
+                </li>
+              </ul>
+              <LanguageSwitcher
+                variant="light"
+                onLocaleChange={closeMobileMenu}
+              />
+              <CountryCurrencySelector className="mt-6" />
+            </div>
           </SheetContent>
         </Sheet>
       </div>
