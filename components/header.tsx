@@ -124,14 +124,22 @@ export default function Header() {
         </div>
       </div>
       <div className="flex justify-between items-center gap-4 py-3 container mx-auto">
-        <Link href={"/"}>
+        <Link href={"/"} className="flex items-center gap-2">
           <Image
-            src="/imgs/logo.svg"
+            src="/sp-logo.svg"
             alt=""
             width={200}
             height={200}
-            className="lg:w-40 w-20"
+            className="md:w-10 sm:w-8 w-6"
           />
+          <div className="sm:text-xl text-sm font-semibold">
+            <span className="bg-linear-to-r from-green-950 to-primary text-transparent bg-clip-text">
+              {isRTL ? "سويت" : "Suite"}
+            </span>{" "}
+            <span className="bg-linear-to-r from-yellow-800 to-yellow-700/80 text-transparent bg-clip-text">
+              {isRTL ? "بارك" : "Park"}
+            </span>
+          </div>
         </Link>
         <ul className="lg:flex hidden items-center gap-4">
           <li>
