@@ -25,7 +25,7 @@ export default function Hero() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="w-full"
       >
-        <Carousel dir={"ltr"} className="w-full">
+        <Carousel dir={"ltr"} className="w-full ">
           <CarouselContent>
             {images.map((image) => (
               <CarouselItem key={image.id}>
@@ -36,7 +36,7 @@ export default function Hero() {
                       alt={image.name}
                       width={1000}
                       height={1000}
-                      className="w-full h-[80vh] aspect-video object-cover object-bottom rounded-xl"
+                      className="w-full md:h-[80vh] h-full aspect-video object-cover object-bottom rounded-xl"
                     />
                   </div>
                 </div>

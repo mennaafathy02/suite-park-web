@@ -27,7 +27,7 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
   return (
     <Link
       href={`/rooms/${room.id}`}
-      className="flex gap-4 p-4 bg-white border rounded-md shadow-sm hover:shadow-md transition-shadow"
+      className="flex gap-4 p-4 bg-white border md:min-h-64 rounded-md shadow-sm hover:shadow-md transition-shadow"
     >
       {/* image */}
       <div className="md:w-56 w-36 shrink-0 rounded-md overflow-hidden relative">
@@ -37,10 +37,10 @@ export default function RoomCard({ room, locale }: RoomCardProps) {
             height={1000}
             src={imageSrc}
             alt={name || "Room"}
-            className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 object-cover h-full"
+            className="w-full  object-cover h-full"
           />
         ) : (
-          <div className="w-full md:min-h-40 md:max-h-48 min-h-32 max-h-40 h-full bg-gray-200 flex items-center justify-center"></div>
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center"></div>
         )}
       </div>
 

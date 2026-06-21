@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { motion } from "motion/react";
 import { useContactUs } from "./hook/useContactUs";
 
@@ -30,6 +30,8 @@ export type ContactFormValues = z.input<typeof contactSchema>;
 const NewsletterFooter = () => {
   const t = useTranslations();
   const { form, onSubmit, isLoading } = useContactUs();
+  const locale = useLocale();
+  const isRTL = ["ar"].includes(locale);
   const {
     register,
     formState: { errors },
@@ -57,14 +59,30 @@ const NewsletterFooter = () => {
               stiffness: 200,
             }}
             viewport={{ once: true }}
+            className="flex items-center gap-2"
           >
-            <Image
+            {/* <Image
               src={"/imgs/logo.svg"}
               alt=""
               width={1000}
               height={1000}
               className="md:w-40 w-24"
+            /> */}
+            <Image
+              src="/sp-logo.svg"
+              alt=""
+              width={200}
+              height={200}
+              className="md:w-10 sm:w-8 w-6"
             />
+            <div className="sm:text-xl text-sm font-semibold">
+              <span className="bg-linear-to-r from-green-950 to-primary text-transparent bg-clip-text">
+                {isRTL ? "سويت" : "Suite"}
+              </span>{" "}
+              <span className="bg-linear-to-r from-yellow-800 to-yellow-700/80 text-transparent bg-clip-text">
+                {isRTL ? "بارك" : "Park"}
+              </span>
+            </div>
           </motion.div>
 
           {/* Description Text */}

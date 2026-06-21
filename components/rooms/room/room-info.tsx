@@ -162,22 +162,26 @@ export default function RoomInfo() {
       {/* Image Gallery Dialog */}
       {images.length > 0 && (
         <Dialog open={galleryOpen} onOpenChange={setGalleryOpen}>
-          <DialogContent dir={dir} className="max-w-screen max-h-screen p-0">
-            <DialogHeader className="  hidden">
-              <DialogTitle className="rtl:text-start">
+          <DialogContent 
+            dir={dir} 
+            className="max-w-none w-screen h-[100dvh] p-0 m-0 bg-black border-none rounded-none flex flex-col items-center justify-center [&>button]:text-white [&>button]:bg-black/50 [&>button]:rounded-full [&>button]:p-2 [&>button]:top-4 [&>button]:w-fit [&>button]:right-4"
+          >
+            <DialogHeader className="hidden">
+              <DialogTitle className="rtl:text-start text-white">
                 {t("room.image_gallery")}
               </DialogTitle>
             </DialogHeader>
-            <div className="p w-full h-full">
+            
+            <div className="w-full h-full flex items-center justify-center">
               <Carousel
                 opts={{ startIndex: currentImageIndex, loop: true }}
-                className="w-full"
-                dir={"ltr"}
+                className="w-full max-w-7xl mx-auto"
+                dir="ltr"
               >
-                <CarouselContent className="w-full">
+                <CarouselContent className="h-[100dvh] m-0">
                   {images.map((image, index) => (
-                    <CarouselItem key={image.id} className="">
-                      <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                    <CarouselItem key={image.id} className="flex flex-col items-center justify-center p-0 relative">
+                      <div className="relative w-full h-[85vh]">
                         <Image
                           src={getImageUrl(image.path)}
                           alt={image.name}
@@ -186,14 +190,16 @@ export default function RoomInfo() {
                           className="object-contain"
                         />
                       </div>
-                      <p className="text-center text-sm text-gray-500 mt-2">
-                        {index + 1} / {images.length}
-                      </p>
+                      <div className="absolute bottom-6 md:bottom-10 w-full text-center">
+                        <p className="text-sm font-medium text-gray-300 bg-black/50 inline-block px-3 py-1 rounded-full">
+                          {index + 1} / {images.length}
+                        </p>
+                      </div>
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                {/* <CarouselPrevious className=" start-4 rtl:rotate-180" />
-                <CarouselNext className=" end-4 rtl:rotate-180" /> */}
+                {/* <CarouselPrevious className="start-4 rtl:rotate-180" />
+                <CarouselNext className="end-4 rtl:rotate-180" /> */}
               </Carousel>
             </div>
           </DialogContent>

@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { SortType, Room } from "./types";
 import RoomCard, { RoomCardSkeleton } from "./room-card";
-import { Grid2X2, List } from "lucide-react";
+// import { Grid2X2, List } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useRooms } from "./hooks/useRooms";
@@ -15,6 +15,7 @@ interface SortDropdownProps {
 }
 
 function SortDropdown({ value, onChange }: SortDropdownProps) {
+  const t = useTranslations();
   return (
     <label className="flex items-center gap-2">
       <span className="text-sm text-gray-600">Sort by:</span>
@@ -25,10 +26,12 @@ function SortDropdown({ value, onChange }: SortDropdownProps) {
         className="ml-2 px-3 py-1 text-sm border rounded-md bg-white"
         aria-label="Sort places"
       >
-        <option value="recommended">Recommended</option>
-        <option value="price-asc">Price low → high</option>
-        <option value="price-desc">Price high → low</option>
-        <option value="rating">Top rated</option>
+        <option value="recommended">
+          {t("rooms.sort.recommended")}
+        </option>
+        <option value="price-asc">{t("rooms.sort.price_asc")}</option>
+        <option value="price-desc">{t("rooms.sort.price_desc")}</option>
+        <option value="rating">{t("rooms.sort.rating")}</option>
       </select>
     </label>
   );
@@ -145,24 +148,6 @@ export default function PlacesList({
 
         <div className="flex items-center gap-4 w-full justify-between">
           <SortDropdown value={sort} onChange={setSort} />
-          <div className="flex items-center border justify-between p-2 py-1 rounded-full">
-            <div
-              onClick={() => setLayout("list")}
-              className={`p-1 rounded-full
-                ${layout == "list" ? "text-primary border-primary border" : ""}
-                `}
-            >
-              <List className="size-4 " />
-            </div>
-            <div
-              onClick={() => setLayout("grid")}
-              className={`p-1 rounded-full
-                ${layout != "list" ? "text-primary border-primary border" : ""}
-                `}
-            >
-              <Grid2X2 className="size-4" />
-            </div>
-          </div>
         </div>
       </div>
 
